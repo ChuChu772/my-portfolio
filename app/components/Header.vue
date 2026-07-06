@@ -12,12 +12,12 @@
   >
     <button
       @click="goTo('/')"
-      class="col-span-2 sm:col-span-1 md:col-span-4 leading-none text-[var(--color-Aprimary)] text-left z-50"
+      class="col-span-2 sm:col-span-2 md:col-span-4 leading-none text-[var(--color-Aprimary)] text-left z-50"
     >
       <h2>PiPi Chou Portfolio</h2>
     </button>
     <div
-      class="col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-2 lg:col-start-7 pr-[2.5px] text-[var(--color-Aprimary)] flex justify-between max-sm:hidden"
+      class="col-span-2 sm:col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-7 pr-[2.5px] text-[var(--color-Aprimary)] flex justify-between max-sm:hidden"
     >
       <a href="mailto:matsu310720@gmail.com" class="cursor-pointer">
         <h3 class="leading-none !m-0">CONTACT</h3>

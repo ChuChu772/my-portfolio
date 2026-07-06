@@ -13,7 +13,7 @@
 
   <section
     ref="sectionRef"
-    class="grid-layout8 !py-0 !w-screen opacity-0 max-md:!gap-2 max-md:!p-2 !mt-12 sm:!mt-20 md:!mt-0"
+    class="grid-layout8 !py-0 !w-screen opacity-0 max-md:!gap-2 !mt-12 sm:!mt-20 md:!mt-0"
   >
     <!-- 上：專案列表 -->
     <div
