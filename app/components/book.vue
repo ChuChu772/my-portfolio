@@ -128,7 +128,6 @@ async function loadPageFlip() {
 async function initFlip() {
   const el = bookRef.value;
   if (!el) {
-    console.log("initFlip: bookRef is null");
     return;
   }
 
@@ -143,10 +142,8 @@ async function initFlip() {
   const width = el.clientWidth;
   const height = el.clientHeight;
   if (!width || !height) return;
-  console.log("initFlip size:", width, height);
 
   const PageFlip = await loadPageFlip();
-  console.log("PageFlip loaded:", PageFlip);
 
   pageFlip = new PageFlip(el, {
     width,
@@ -170,7 +167,6 @@ async function initFlip() {
 }
 
 function openBook() {
-  console.log("openBook clicked");
   coverArrived.value = true;
   prepareBookBehindCover();
 }
