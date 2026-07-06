@@ -377,8 +377,13 @@
 import ColorCard from "~/components/ColorCard.vue";
 import { colors } from "~/composables/colors";
 import ProjectLayout from "~/components/ProjectLayout.vue";
-
 import { ref, onMounted, onBeforeUnmount } from "vue";
+
+useSeoMeta({
+  title: "La1ako",
+  description: "PiPiChouPortfolio",
+  ogImage: "/project1/cover.png",
+});
 
 const project = {
   title: "La1ako",

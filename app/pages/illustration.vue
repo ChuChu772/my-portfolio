@@ -29,6 +29,12 @@
 import { ref, onMounted } from "vue";
 import { useTextLineAnimation } from "@/composables/useTextLineAnimation";
 
+useSeoMeta({
+  title: "PiPi's Illustration",
+  description: "PiPiChouPortfolio",
+  ogImage: "/book/book1.webp",
+});
+
 const introTextRef = ref<HTMLElement | null>(null);
 const introTextAnim = useTextLineAnimation(introTextRef, { delay: 0, y: 14 });
 

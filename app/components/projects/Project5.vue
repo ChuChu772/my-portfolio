@@ -35,9 +35,13 @@
 
 <script setup>
 import ProjectLayout from "~/components/ProjectLayout.vue";
-
+useSeoMeta({
+  title: "泡",
+  description: "PiPiChouPortfolio",
+  ogImage: "/project5/51.webp",
+});
 const project = {
-  title: "拾遺",
+  title: "泡",
   description:
     "本作品以歐根紗作為主要材質，運用其半透明與光線折射所產生的色彩變化特性，發展出由少成多的視覺概念。透過重複堆疊、包覆與綁結的手法，將原本輕薄單一的纖維層層累積，使其逐漸轉化為具有體積感的結構，形成如泡泡般聚集的有機形態。利用光線穿透與流動所產生的視覺變化，使作品在不同觀看角度與光源條件下呈現多層次效果。整體試圖營造介於實體與幻象之間的視覺體驗，使材質本身成為介質，連結空間、光與感知的流動關係。",
 

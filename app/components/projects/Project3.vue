@@ -211,6 +211,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Player from "@vimeo/player";
 import ProjectLayout from "~/components/ProjectLayout.vue";
 
+useSeoMeta({
+  title: "氣息的反饋",
+  description: "PiPiChouPortfolio",
+  ogImage: "/project3/b1.webp",
+});
+
 gsap.registerPlugin(ScrollTrigger);
 
 const project = {

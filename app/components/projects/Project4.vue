@@ -112,6 +112,12 @@
 <script setup>
 import ProjectLayout from "~/components/ProjectLayout.vue";
 
+useSeoMeta({
+  title: "共生",
+  description: "PiPiChouPortfolio",
+  ogImage: "/project4/cover.webp",
+});
+
 const project = {
   title: "共生",
   description:

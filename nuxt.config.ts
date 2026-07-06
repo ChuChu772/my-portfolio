@@ -11,6 +11,22 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      title: "PiPiChouPortfolio",
+      meta: [
+        {
+          name: "PiPi made",
+          content:
+            "Interactive portfolio featuring UI/UX design, creative coding, and visual storytelling projects.",
+        },
+        {
+          property: "og:title",
+          content: "PiPiChouPortfolio",
+        },
+        {
+          property: "og:image",
+          content: "/book/illu.png",
+        },
+      ],
       link: [
         {
           rel: "preconnect",
@@ -24,6 +40,11 @@ export default defineNuxtConfig({
         {
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Inria+Serif:wght@300;400;700&family=Noto+Serif+TC:wght@200..900&display=swap",
+        },
+
+        {
+          rel: "icon",
+          href: "/fav.png",
         },
       ],
     },

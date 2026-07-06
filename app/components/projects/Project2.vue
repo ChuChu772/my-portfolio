@@ -308,6 +308,13 @@
 
 <script setup>
 import ProjectLayout from "~/components/ProjectLayout.vue";
+
+useSeoMeta({
+  title: "拾遺",
+  description: "PiPiChouPortfolio",
+  ogImage: "/project2/p1.png",
+});
+
 async function preloadResources() {
   const videos = [
     "/project2/project22.mp4",
