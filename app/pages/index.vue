@@ -1,0 +1,270 @@
+<template>
+  <div ref="trailTargetRef" class="fixed h-[100svh] w-screen overflow-hidden">
+    <div ref="opa" class="absolute inset-0 z-0">
+      <Goomorph />
+    </div>
+
+    <div class="grid-layout8 z-20 relative">
+      <div class="md:col-span-2 col-span-1 z-20">
+        <p ref="introTextRef" class="leading-none opacity-0">
+          My work exists at the intersection of design, technology, and
+          interaction. With a background in Creative Media Design and front-end
+          development, I am interested in how digital experiences can
+          communicate ideas, evoke emotions, and encourage participation.
+        </p>
+      </div>
+      <div
+        class="md:col-span-1 md:col-start-4 col-start-3 col-span-1 lg:col-start-6"
+      >
+        <p ref="portfolioTextRef" class="leading-none opacity-0">
+          This portfolio presents selected projects across UI/UX design, web
+          development, and interactive media.
+        </p>
+      </div>
+      <div
+        class="col-span-1 md:col-span-2 lg:col-start-8 md:text-right text-left"
+      >
+        <p ref="contactTextRef" class="leading-none opacity-0">
+          PiPiChou based in Taiwan
+        </p>
+        <p ref="contactTextRef2" class="leading-none opacity-0">
+          Email : matsu310720@gmail.com
+        </p>
+      </div>
+    </div>
+
+    <div
+      ref="flowContainer"
+      class="absolute inset-0 z-20 flex flex-col justify-center pointer-events-none items-center gap-2"
+    >
+      <a
+        @click.prevent="navigateTo('/illustration')"
+        class="pointer-events-auto cursor-pointer"
+      >
+        <div class="flow-item flex items-center justify-center gap-2">
+          <span class="side-symbol left">[</span>
+          <h3 class="item-text opacity-0">ILLUSTRATION</h3>
+          <span class="side-symbol right">]</span>
+        </div>
+      </a>
+
+      <a
+        @click.prevent="navigateTo('/project')"
+        class="pointer-events-auto cursor-pointer"
+      >
+        <div class="flow-item flex items-center justify-center gap-2">
+          <span class="side-symbol left">[</span>
+          <h3 class="item-text opacity-0">MY WORKS</h3>
+          <span class="side-symbol right">]</span>
+        </div>
+      </a>
+
+      <!-- <a
+        @click.prevent="navigateTo('/resume')"
+        class="pointer-events-auto cursor-pointer"
+      >
+        <div class="flow-item flex items-center justify-center gap-2">
+          <span class="side-symbol left">[</span>
+          <h3 class="item-text opacity-0">resume</h3>
+          <span class="side-symbol right">]</span>
+        </div>
+      </a> -->
+
+      <div class="absolute bottom-0 w-screen px-4">
+        <img ref="pipiRef" src="/pipi.png" alt="" class="opacity-0" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted, onBeforeUnmount, ref, nextTick } from "vue";
+import { useMouseTrailText } from "@/composables/useMouseTrailText";
+import { useEntranceController } from "@/composables/Useentrancecontroller";
+import { useTextLineAnimation } from "@/composables/useTextLineAnimation";
+import gsap from "gsap";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const { registerContentEntrance } = useEntranceController();
+
+// ── 滑鼠跟隨文字 ──────────────────────────────────────────
+const trailTargetRef = ref<HTMLElement | null>(null);
+const flowContainer = ref<HTMLElement | null>(null);
+
+const { bind } = useMouseTrailText({
+  text: "I am drawn to the gentle poetry of everyday life—the moments that pass quietly yet linger in our memories. Through illustration, design, and interactive media, I create dreamy experiences inspired by curiosity, emotion, and imagination. Like collecting little stars along a journey, each project becomes a small world where stories, feelings, and wonder can softly unfold.",
+  fontSize: 9,
+  fontFamily: "monospace",
+  maxWords: 80,
+  zIndex: 9999,
+});
+
+let trail: ReturnType<typeof bind> | null = null;
+
+const introTextRef = ref<HTMLElement | null>(null);
+const portfolioTextRef = ref<HTMLElement | null>(null);
+const contactTextRef = ref<HTMLElement | null>(null);
+const contactTextRef2 = ref<HTMLElement | null>(null);
+const opa = ref<HTMLElement | null>(null);
+
+const introTextAnim = useTextLineAnimation(introTextRef, { delay: 0, y: 14 });
+const portfolioTextAnim = useTextLineAnimation(portfolioTextRef, {
+  delay: 0.15,
+  y: 14,
+});
+const contactTextAnim2 = useTextLineAnimation(contactTextRef2, {
+  delay: 0.3,
+  y: 14,
+});
+const contactTextAnim = useTextLineAnimation(contactTextRef, {
+  delay: 0.3,
+  y: 14,
+});
+
+// ── pipi.png 的 scale/opacity 入場離場 ───────────────────────
+const pipiRef = ref<HTMLElement | null>(null);
+
+function setPipiInitial() {
+  if (!pipiRef.value) return;
+  gsap.set(pipiRef.value, { scale: 2, opacity: 0 });
+}
+
+function playPipiIn(): void {
+  if (!pipiRef.value) return;
+  gsap.to(pipiRef.value, {
+    scale: 1,
+    opacity: 1,
+    duration: 0.8,
+    ease: "power3.out",
+    delay: 0.15,
+  });
+}
+
+function playPipiOut(): Promise<void> {
+  return new Promise((resolve) => {
+    if (!pipiRef.value) {
+      resolve();
+      return;
+    }
+    gsap.to(pipiRef.value, {
+      scale: 2,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power3.in",
+      onComplete: () => resolve(),
+    });
+  });
+}
+
+function opaout(): void {
+  if (!opa.value) return;
+  gsap.to(opa.value, {
+    opacity: 0,
+    duration: 0.8,
+    ease: "power3.out",
+  });
+}
+
+const masterTl = gsap.timeline({ paused: true });
+let isNavigating = false;
+
+onMounted(async () => {
+  await nextTick();
+
+  const items = flowContainer.value?.querySelectorAll(".flow-item");
+  if (!items) return;
+
+  items.forEach((item, i) => {
+    const left = item.querySelector(".left");
+    const right = item.querySelector(".right");
+    const text = item.querySelector(".item-text");
+
+    gsap.set(left, { x: 20, opacity: 0 });
+    gsap.set(right, { x: -20, opacity: 0 });
+    gsap.set(text, { opacity: 0 });
+
+    const t = i * 0.2;
+
+    masterTl
+      .to(
+        [left, right],
+        {
+          x: (idx) => (idx === 0 ? -4 : 4),
+          duration: 0.8,
+          opacity: 1,
+          ease: "power3.out",
+        },
+        t,
+      )
+      .to(
+        text,
+        {
+          opacity: 1,
+          duration: 0.3,
+        },
+        t + 0.4,
+      );
+  });
+
+  setPipiInitial();
+
+  registerContentEntrance(() => {
+    masterTl.play();
+    introTextAnim.run();
+    portfolioTextAnim.run();
+    contactTextAnim.run();
+    contactTextAnim2.run();
+    playPipiIn();
+  });
+});
+
+onMounted(() => {
+  trail = bind(trailTargetRef.value || document.body);
+});
+
+onBeforeUnmount(() => {
+  trail?.cleanup();
+});
+
+// ── 離場：trail 淡出 + items 倒轉 + 三段文字退場 + pipi 縮小淡出，全部一起播完才換頁 ──
+function reverseItems(): Promise<void> {
+  return new Promise((resolve) => {
+    masterTl.eventCallback("onReverseComplete", () => resolve());
+    masterTl.timeScale(1.8).reverse();
+  });
+}
+
+async function navigateTo(to: string): Promise<void> {
+  if (isNavigating) return;
+  isNavigating = true;
+
+  await Promise.all([
+    trail?.fadeOutAll() ?? Promise.resolve(),
+    reverseItems(),
+    playPipiOut(),
+    opaout(),
+    introTextAnim.playOut({ duration: 0.4, y: -14 }),
+    portfolioTextAnim.playOut({ duration: 0.4, y: -14 }),
+    contactTextAnim.playOut({ duration: 0.4, y: -14 }),
+    contactTextAnim2.playOut({ duration: 0.4, y: -14 }),
+  ]);
+
+  // 動畫都播完了，把三段文字的 DOM 還原成原本的樣子
+  introTextAnim.restore();
+  portfolioTextAnim.restore();
+  contactTextAnim.restore();
+
+  router.push(to);
+}
+</script>
+
+<style scoped>
+.side-symbol {
+  opacity: 0;
+}
+.item-text {
+  text-align: center;
+  padding-top: 6px;
+}
+</style>
