@@ -90,8 +90,8 @@ let resourcesReady: Promise<void> | null = null;
 
 function preloadResources(): Promise<void> {
   const images = [
-    "/project2/p1.png",
-    "/project1/cover.png",
+    "/project2/cover.webp",
+    "/project1/cover.webp",
     "/project3/b1.webp",
     "/project4/cover.webp",
     "/project5/cover.webp",

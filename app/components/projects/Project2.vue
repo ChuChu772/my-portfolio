@@ -13,7 +13,7 @@
         >
           <img
             ref="imgRef"
-            src="/project2/p1.png"
+            src="/project2/cover.webp"
             class="w-full h-full object-cover"
           />
         </div>
@@ -312,7 +312,7 @@ import ProjectLayout from "~/components/ProjectLayout.vue";
 useSeoMeta({
   title: "PiPiChouPortfolio",
   description: "Project 拾遺",
-  ogImage: "/project2/p1.png",
+  ogImage: "/project2/cover.webp",
 });
 
 async function preloadResources() {

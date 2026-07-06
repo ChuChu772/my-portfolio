@@ -13,7 +13,7 @@
         >
           <img
             ref="imgRef"
-            src="/project1/cover.png"
+            src="/project1/cover.webp"
             class="w-full h-full object-cover"
           />
         </div>
@@ -85,55 +85,25 @@
     <div
       class="lg:col-span-2 md:col-span-2 col-span-1 bg-gray-100 aspect-[390/844] overflow-hidden shadow-[0_0_5px_rgba(255,105,180,0.1)]"
     >
-      <img src="/project1/ia1.png" class="w-full h-full object-cover" />
+      <img src="/project1/ia1.webp" class="w-full h-full object-cover" />
     </div>
     <div
       class="lg:col-span-2 md:col-span-2 col-span-1 bg-gray-100 aspect-[390/844] overflow-hidden shadow-[0_0_5px_rgba(255,105,180,0.1)]"
     >
-      <img src="/project1/ia2.png" class="w-full h-full object-cover" />
+      <img src="/project1/ia2.webp" class="w-full h-full object-cover" />
     </div>
     <div
       class="lg:col-span-2 md:col-span-2 col-span-1 bg-gray-100 aspect-[390/844] overflow-hidden shadow-[0_0_5px_rgba(255,105,180,0.1)]"
     >
-      <img src="/project1/ia3.png" class="w-full h-full object-cover" />
+      <img src="/project1/ia3.webp" class="w-full h-full object-cover" />
     </div>
     <!-- 第四張：mobile 換行獨佔一格對齊2x2，用 col-start -->
     <div
       class="lg:col-span-2 md:col-span-2 col-span-1 md:col-start-auto lg:col-start-auto bg-gray-100 aspect-[390/844] overflow-hidden shadow-[0_0_5px_rgba(255,105,180,0.1)]"
     >
-      <img src="/project1/ia4.png" class="w-full h-full object-cover" />
+      <img src="/project1/ia4.webp" class="w-full h-full object-cover" />
     </div>
   </div>
-
-  <!-- <div class="grid-layout8 !mb-[var(--margin)]" id="Interface Design">
-    <div
-      class="lg:col-span-8 md:col-span-6 col-span-3 flex gap-2 flex-col justify-between"
-    >
-      <h3>
-        介面設計延續品牌視覺識別，以溫暖柔和的色彩與插畫元素建立一致的品牌氛圍。<br />透過統一的元件規範、清晰的資訊層級與適當留白，引導使用者專注於商品內容與購買流程，同時兼顧視覺表現與操作效率。
-      </h3>
-    </div>
-
-    <div
-      class="lg:col-span-2 md:col-span-6 col-span-3 flex lg:flex-col flex-row gap-2 md:pr-1 justify-end order-2 lg:order-1"
-    >
-      <div
-        v-for="item in images"
-        :key="item.id"
-        class="aspect-[16/9] lg:w-1/2 w-full flex cursor-pointer bg-cover bg-center transition-all duration-300"
-        :class="current === item.src ? 'opacity-100' : 'opacity-30'"
-        :style="{ backgroundImage: `url(${item.src})` }"
-        @click="current = item.src"
-      >
-        {{ item.label }}
-      </div>
-    </div>
-    <div
-      class="col-span-3 bg-[var(--Asecondary)] md:col-span-6 aspect-[16/10] overflow-hidden order-1 lg:order-2"
-    >
-      <img :src="current" class="w-full h-full p-20 object-cover" />
-    </div>
-  </div> -->
 
   <div
     class="grid-layout8 justify-end flex items-start sm:flex-row-reverse !my-[var(--margin)]"
@@ -150,7 +120,7 @@
     <div
       class="lg:col-span-6 md:col-span-4 col-span-3 gap-3 sm:gap-4 aspect-[16/9] order-1 md:order-2"
     >
-      <img src="/project1/ia.png" alt="" class="w-full h-full object-cover" />
+      <img src="/project1/ia.webp" alt="" class="w-full h-full object-cover" />
     </div>
   </div>
 
@@ -252,7 +222,6 @@
   </div>
 
   <div class="grid-layout8 !mb-[var(--margin)]" id="Visual Design">
-    <!-- 標題：mobile 全寬，tablet 2欄，desktop 1欄 -->
     <div class="lg:col-span-1 md:col-span-2 col-span-3 flex gap-2">
       <h5>01 . 02</h5>
       <h4>Visual Design</h4>
@@ -290,7 +259,7 @@
     <div class="md:col-span-6 col-span-3 gap-4">
       <!-- 大圖：佔 6 欄寬（lg），16:9 -->
       <img
-        src="/project1/rwd3.png"
+        src="/project1/rwd3.webp"
         alt=""
         class="w-full object-cover shadow-[0_0_5px_rgba(255,105,180,0.1)]"
       />
@@ -298,7 +267,7 @@
     <div class="md:col-span-2 col-span-1 col-start-3 gap-4">
       <!-- 大圖：佔 6 欄寬（lg），16:9 -->
       <img
-        src="/project1/rwd2.png"
+        src="/project1/rwd2.webp"
         alt=""
         class="w-full object-cover shadow-[0_0_5px_rgba(255,105,180,0.1)]"
       />
@@ -382,7 +351,7 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 useSeoMeta({
   title: "PiPiChouPortfolio",
   description: "Project La1ako",
-  ogImage: "/project1/cover.png",
+  ogImage: "/project1/cover.webp",
 });
 
 const project = {
@@ -417,47 +386,21 @@ const project = {
   ],
 };
 
-const images = [
-  {
-    id: 1,
-    label: "a",
-    src: "/a.png",
-    bg: "/a.png",
-  },
-  {
-    id: 2,
-    label: "b",
-    src: "/b.png",
-    bg: "/b.png",
-  },
-  {
-    id: 3,
-    label: "c",
-    src: "/c.png",
-    bg: "/b.png",
-  },
-  {
-    id: 4,
-    label: "d",
-    src: "/d.png",
-    bg: "/b.png",
-  },
-];
 async function preloadResources() {
   const videos = ["/project1/interaction1.mp4", "/project1/interaction2.mp4"];
 
   const images = [
     "/project1/about.jpg",
-    "/project1/cover.png",
-    "/project1/ia.png",
-    "/project1/ia1.png",
-    "/project1/ia2.png",
-    "/project1/ia3.png",
-    "/project1/ia4.png",
-    "/project1/rwd1.png",
-    "/project1/rwd2.png",
-    "/project1/rwd3.png",
-    "/project1/p1.png",
+    "/project1/cover.webp",
+    "/project1/ia.webp",
+    "/project1/ia1.webp",
+    "/project1/ia2.webp",
+    "/project1/ia3.webp",
+    "/project1/ia4.webp",
+    "/project1/rwd1.webp",
+    "/project1/rwd2.webp",
+    "/project1/rwd3.webp",
+    "cover.webp",
   ];
 
   const preloadImage = (src) =>
@@ -482,7 +425,6 @@ async function preloadResources() {
 
   await Promise.all([...images.map(preloadImage), ...videos.map(preloadVideo)]);
 }
-const current = ref(images[0].src);
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

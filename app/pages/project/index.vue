@@ -98,7 +98,7 @@ const goButtonRef = ref(null); // 「GO TO PROJECT」手機版按鈕
 const projects = [
   {
     title: "La1ako",
-    image: "/project1/cover.png",
+    image: "/project1/cover.webp",
     desc: "樹脂飾品品牌網站",
     date: "2026",
     id: 1,
@@ -107,7 +107,7 @@ const projects = [
   },
   {
     title: "拾遺",
-    image: "/project2/p1.png",
+    image: "/project2/cover.webp",
     desc: "互動植物網站",
     date: "2025",
     id: 2,
