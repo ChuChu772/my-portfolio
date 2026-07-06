@@ -16,8 +16,18 @@
       <img src="/pipi.png" alt="" class="opacity-1 absolute" />
     </div>
 
-    <!-- 圖片輪播：JS 控制單一 currentIndex，只有目前這張跟下一張在做 crossfade -->
-    <div class="loader bottom-0 w-screen px-4">
+    <div
+      class="marquee flex absolute bottom-0 md:bottom-[-50px] left-0 w-full pointer-events-none overflow-hidden z-[-1]"
+    >
+      <div ref="track" class="marquee-track flex">
+        <img v-for="(img, i) in [...images, ...images]" :key="i" :src="img" />
+      </div>
+    </div>
+  </div>
+  <div
+    class="h-[100svh] w-screen absolute left-0 flex items-end mt-12 bottom-0 md:bottom-[-80px] lg:bottom-[-110px]"
+  >
+    <div class="loader w-screen border">
       <img
         v-for="(src, i) in roadFrames"
         :key="src"
@@ -25,14 +35,6 @@
         :src="src"
         class="frame"
       />
-    </div>
-
-    <div
-      class="marquee flex absolute md:bottom-[-50px] bottom-0 left-0 w-full pointer-events-none overflow-hidden z-[-1]"
-    >
-      <div ref="track" class="marquee-track flex">
-        <img v-for="(img, i) in [...images, ...images]" :key="i" :src="img" />
-      </div>
     </div>
   </div>
 </template>
@@ -73,7 +75,6 @@ function startSlideshow() {
   const els = frameEls.value;
   if (els.length === 0) return;
 
-  // 一開始：第一張顯示，其餘全部隱藏
   els.forEach((el, i) => {
     if (!el) return;
     gsap.set(el, { opacity: i === 0 ? 1 : 0 });
@@ -99,15 +100,9 @@ onBeforeUnmount(() => {
   if (slideshowTimer) clearInterval(slideshowTimer);
 });
 
-/* ============================================================
-   Intro 文字動畫
-   ============================================================ */
 const introTextRef = ref<HTMLElement | null>(null);
 const introTextAnim = useTextLineAnimation(introTextRef, { delay: 0, y: 14 });
 
-/* ============================================================
-   Marquee
-   ============================================================ */
 const track = ref();
 
 const images = ["/book/illu.png", "/book/illu.png"];
@@ -129,7 +124,6 @@ const preloadImages = [
 onMounted(async () => {
   introTextAnim.run();
 
-  // 先確認三張輪播圖都真的 decode 完成，再啟動輪播
   await Promise.all(roadFrames.map(decodeImage));
   startSlideshow();
 
@@ -186,17 +180,32 @@ onMounted(async () => {
   flex-shrink: 0;
 }
 
+/* 給 loader 明確的高度，讓內部 absolute 定位的圖片有依據撐滿，
+   並依斷點調整高度比例，配合 RWD */
 .loader {
   width: 100%;
   opacity: 0.5;
   position: relative;
+  height: 30vh;
+}
+
+@media (min-width: 768px) {
+  .loader {
+    height: 40vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .loader {
+    height: 50vh;
+  }
 }
 
 .frame {
   position: absolute;
-  bottom: -90vh;
-  left: 0;
+  inset: 0;
   width: 100%;
+  height: 100%;
   object-fit: cover;
   opacity: 0;
 }
