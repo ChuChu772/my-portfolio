@@ -86,7 +86,6 @@
     </div>
   </div>
   <div class="w-screen p-4">
-    <!-- 1999: 大螢幕靠左 -->
     <div class="timeline-item flex gap-4 py-4 relative justify-start">
       <div class="line absolute top-0 left-0 w-full h-[1px] bg-gray-300" />
       <h4 class="shrink-0 w-16 pt-2">
@@ -309,6 +308,62 @@
 
 <script setup>
 import ProjectLayout from "~/components/ProjectLayout.vue";
+async function preloadResources() {
+  const videos = [
+    "/project2/project22.mp4",
+    "/project2/project23.mp4",
+    "/project2/project21.mp4",
+  ];
+
+  const images = [
+    "/project2/Pattern/w1.png",
+    "/project2/Pattern/w2.png",
+    "/project2/Pattern/w3.png",
+    "/project2/Pattern/w4.png",
+    "/project2/Pattern/w5.png",
+    "/project2/Pattern/w6.png",
+    "/project2/Pattern/w7.png",
+    "/project2/Pattern/w8.png",
+    "/project2/Pattern/w9.png",
+    "/project2/Pattern/w10.png",
+    "/project2/Pattern/w11.png",
+    "/project2/Pattern/w12.png",
+    "/project2/Pattern/w13.png",
+    "/project2/Pattern/w14.png",
+    "/project2/Pattern/w15.png",
+    "/project2/Pattern/w16.png",
+    "/project2/Pattern/w17.png",
+    "/project2/Pattern/w18.png",
+    "/project2/Pattern/w19.png",
+    "/project2/Pattern/w20.png",
+    "/project2/explore1.png",
+    "/project2/explore2.png",
+    "/project2/explore3.png",
+    "/project3/b1.webp",
+  ];
+
+  const preloadImage = (src) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = resolve;
+      img.onerror = resolve;
+      img.src = src;
+    });
+
+  const preloadVideo = (src) =>
+    new Promise((resolve) => {
+      const video = document.createElement("video");
+      video.preload = "auto";
+      video.muted = true;
+      // 只要 metadata/資料開始準備好就算，避免整支影片下載完才 resolve 導致卡太久
+      video.addEventListener("canplaythrough", resolve, { once: true });
+      video.addEventListener("error", resolve, { once: true });
+      video.src = src;
+      video.load();
+    });
+
+  await Promise.all([...images.map(preloadImage), ...videos.map(preloadVideo)]);
+}
 
 const images = Array.from({ length: 12 }, (_, i) => {
   return `/project2/record/record${i + 1}.webp`;
@@ -362,6 +417,7 @@ const exploreRef = ref(null);
 let exploreTrigger = null;
 
 onMounted(() => {
+  preloadResources();
   if (!imgWrapRef.value || !imgRef.value) return;
 
   // wrapper 從下往上展開

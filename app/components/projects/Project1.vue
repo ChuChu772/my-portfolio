@@ -320,7 +320,7 @@
         Get Receipt!
       </h3>
       <video
-        src="/project1/interaction1.mov"
+        src="/project1/interaction1.mp4"
         autoplay
         muted
         loop
@@ -338,7 +338,7 @@
       </h3>
 
       <video
-        src="/project1/interaction2.mov"
+        src="/project1/interaction2.mp4"
         autoplay
         muted
         loop
@@ -346,12 +346,6 @@
         class="w-full aspect-[16/7] object-cover lg:col-span-7 md:col-span-5 col-span-3"
       ></video>
     </div>
-    <!-- <div class="col-span-2">
-      <video
-        src="/project1/interaction2.mov"
-        class="w-full h-full object-cover"
-      ></video>
-    </div> -->
   </div>
 
   <div
@@ -375,18 +369,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="grid-layout8 !mb-[var(--margin)]" id="Full-Stack Developer">
-    <div class="col-span-2 flex gap-2 md::sticky top-12 self-start">
-      <h5>01 . 04</h5>
-      <h4>Parts of the Project</h4>
-    </div>
-    <div
-      class="lg:col-span-5 lg:col-start-3 col-span-4 w-full bg-black h-[150vh]"
-    >
-      <img src="/p1.png" alt="" class="w-full h-full object-cover p-10" />
-    </div>
-  </div> -->
 </template>
 
 <style lang="css" scoped></style>
@@ -456,7 +438,45 @@ const images = [
     bg: "/b.png",
   },
 ];
+async function preloadResources() {
+  const videos = ["/project1/interaction1.mp4", "/project1/interaction2.mp4"];
 
+  const images = [
+    "/project1/about.jpg",
+    "/project1/cover.png",
+    "ia.png",
+    "ia1.png",
+    "ia2.png",
+    "ia3.png",
+    "ia4.png",
+    "rwd1.png",
+    "rwd2.png",
+    "rwd3.png",
+    "p1.png",
+  ];
+
+  const preloadImage = (src) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = resolve;
+      img.onerror = resolve;
+      img.src = src;
+    });
+
+  const preloadVideo = (src) =>
+    new Promise((resolve) => {
+      const video = document.createElement("video");
+      video.preload = "auto";
+      video.muted = true;
+      // 只要 metadata/資料開始準備好就算，避免整支影片下載完才 resolve 導致卡太久
+      video.addEventListener("canplaythrough", resolve, { once: true });
+      video.addEventListener("error", resolve, { once: true });
+      video.src = src;
+      video.load();
+    });
+
+  await Promise.all([...images.map(preloadImage), ...videos.map(preloadVideo)]);
+}
 const current = ref(images[0].src);
 
 import { gsap } from "gsap";
@@ -472,7 +492,7 @@ const imgRef = ref(null);
 let triggers = [];
 
 onMounted(() => {
-  // ── 圖片 wrapper 展開動畫 ──
+  preloadResources();
   if (imgWrapRef.value && imgRef.value) {
     // wrapper 從下往上展開
     gsap.from(imgWrapRef.value, {

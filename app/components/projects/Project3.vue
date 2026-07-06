@@ -237,17 +237,30 @@ const project = {
   ],
 };
 
-/* ============================================================
-   首屏圖片 intro 動畫
-   ============================================================ */
+async function preloadResources() {
+  const images = [
+    "/project3/b1.webp",
+    "/project3/b2.webp",
+    "/project3/b3.webp,",
+    "/project3/b4.webp",
+    "/project3/b5.webp",
+    "/project4/cover.webp",
+  ];
+
+  const preloadImage = (src) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = resolve;
+      img.onerror = resolve;
+      img.src = src;
+    });
+
+  await Promise.all([...images.map(preloadImage)]);
+}
+
 const imgWrapRef = ref(null);
 const imgRef = ref(null);
 
-/* ============================================================
-   Vimeo：同一支影片，兩個 iframe
-   - previewRef：縮圖，自動播放 + loop，一進頁面就 preload
-   - vimeoRef：modal，帶自訂 UI，一進頁面也 preload 好，點擊只是顯示 + play
-   ============================================================ */
 const vimeoId = "1207309445";
 
 const previewRef = ref(null);
@@ -266,6 +279,7 @@ const duration = ref(0);
 let player = null;
 
 onMounted(() => {
+  preloadResources();
   if (imgWrapRef.value && imgRef.value) {
     gsap.from(imgWrapRef.value, {
       clipPath: "inset(100% 0% 0% 0%)",

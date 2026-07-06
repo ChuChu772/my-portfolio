@@ -334,7 +334,6 @@ function startFinalFloat(inst) {
   tweens.push(floatTween);
 }
 
-// 建立一顆 blob：phase = 'clustered'（聚集在中心，preload 用）或 'dispersed'（直接在最終位置）
 function buildBlob(layerEl, b, i, total, phase) {
   const abs = toAbs(b);
   const centerX = size.width / 2;

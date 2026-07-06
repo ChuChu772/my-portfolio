@@ -1,5 +1,4 @@
 <template>
-  <!-- Splash：不是全白遮罩，preload 期間下面的 GooMorph（聚集在中心、goo 融合漂浮）看得到 -->
   <Transition name="splash">
     <div
       v-if="showSplash"
@@ -42,22 +41,18 @@ async function preloadResources() {
         new Promise((resolve) => {
           const img = new Image();
           img.onload = resolve;
-          img.onerror = resolve; // 失敗也繼續，不要卡住整個 preload
+          img.onerror = resolve;
           img.src = src;
         }),
     ),
   );
 }
 
-// 等字體真的載入完成，避免 useTextLineAnimation 用 fallback 字體的行高去分行，
-// 字體換上後文字重排、動畫拆的行跟畫面對不上
 async function waitForFonts() {
   if (typeof document !== "undefined" && "fonts" in document) {
     try {
       await document.fonts.ready;
-    } catch {
-      // 某些瀏覽器/情況下可能不支援，失敗就跳過，不要卡住 preload
-    }
+    } catch {}
   }
 }
 

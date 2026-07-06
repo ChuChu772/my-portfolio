@@ -133,6 +133,27 @@ const project = {
     },
   ],
 };
+async function preloadResources() {
+  const images = [
+    "/project4/cover.webp",
+    "/project4/p41.webp",
+    "/project4/p42.webp",
+    "/project4/p43.webp",
+    "/project4/p44.webp",
+    "/project4/p45.webp",
+    "/project5/cover.webp",
+  ];
+
+  const preloadImage = (src) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = resolve;
+      img.onerror = resolve;
+      img.src = src;
+    });
+
+  await Promise.all([...images.map(preloadImage)]);
+}
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -143,6 +164,7 @@ const imgWrapRef = ref(null);
 const imgRef = ref(null);
 
 onMounted(() => {
+  preloadResources();
   if (!imgWrapRef.value || !imgRef.value) return;
 
   // wrapper 從下往上展開
