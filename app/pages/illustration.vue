@@ -15,11 +15,18 @@
     <div class="absolute bottom-0 w-screen px-4">
       <img src="/pipi.png" alt="" class="opacity-1 absolute" />
     </div>
+
+    <!-- 圖片輪播：JS 控制單一 currentIndex，只有目前這張跟下一張在做 crossfade -->
     <div class="loader bottom-0 w-screen px-4">
-      <img src="/book/road1.png" class="frame frame1" />
-      <img src="/book/road2.png" class="frame frame2" />
-      <img src="/book/road3.png" class="frame frame3" />
+      <img
+        v-for="(src, i) in roadFrames"
+        :key="src"
+        :ref="(el) => setFrameRef(el as HTMLElement, i)"
+        :src="src"
+        class="frame"
+      />
     </div>
+
     <div
       class="marquee flex absolute md:bottom-[-50px] bottom-0 left-0 w-full pointer-events-none overflow-hidden z-[-1]"
     >
@@ -31,8 +38,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useTextLineAnimation } from "@/composables/useTextLineAnimation";
+import gsap from "gsap";
 
 useSeoMeta({
   title: "PiPi's Illustration",
@@ -40,14 +48,66 @@ useSeoMeta({
   ogImage: "/book/book1.webp",
 });
 
+const roadFrames = ["/book/road1.png", "/book/road2.png", "/book/road3.png"];
+const frameEls = ref<(HTMLElement | null)[]>([]);
+
+function setFrameRef(el: HTMLElement | null, i: number) {
+  frameEls.value[i] = el;
+}
+
+function decodeImage(src: string): Promise<void> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = src;
+    img
+      .decode()
+      .then(() => resolve())
+      .catch(() => resolve());
+  });
+}
+
+let slideshowTimer: ReturnType<typeof setInterval> | null = null;
+let currentIndex = 0;
+
+function startSlideshow() {
+  const els = frameEls.value;
+  if (els.length === 0) return;
+
+  // 一開始：第一張顯示，其餘全部隱藏
+  els.forEach((el, i) => {
+    if (!el) return;
+    gsap.set(el, { opacity: i === 0 ? 1 : 0 });
+  });
+
+  slideshowTimer = setInterval(() => {
+    const nextIndex = (currentIndex + 1) % els.length;
+    const currentEl = els[currentIndex];
+    const nextEl = els[nextIndex];
+
+    if (currentEl) {
+      gsap.set(currentEl, { opacity: 0 });
+    }
+    if (nextEl) {
+      gsap.set(nextEl, { opacity: 1 });
+    }
+
+    currentIndex = nextIndex;
+  }, 2000);
+}
+
+onBeforeUnmount(() => {
+  if (slideshowTimer) clearInterval(slideshowTimer);
+});
+
+/* ============================================================
+   Intro 文字動畫
+   ============================================================ */
 const introTextRef = ref<HTMLElement | null>(null);
 const introTextAnim = useTextLineAnimation(introTextRef, { delay: 0, y: 14 });
 
-onMounted(() => {
-  introTextAnim.run();
-});
-import gsap from "gsap";
-
+/* ============================================================
+   Marquee
+   ============================================================ */
 const track = ref();
 
 const images = ["/book/illu.png", "/book/illu.png"];
@@ -66,13 +126,20 @@ const preloadImages = [
   "/book/book12.webp",
 ];
 
-onMounted(() => {
+onMounted(async () => {
+  introTextAnim.run();
+
+  // 先確認三張輪播圖都真的 decode 完成，再啟動輪播
+  await Promise.all(roadFrames.map(decodeImage));
+  startSlideshow();
+
   gsap.to(track.value, {
     x: -(track.value.scrollWidth / 2),
     duration: 40,
     ease: "none",
     repeat: -1,
   });
+
   preloadImages.forEach((src) => {
     const img = new Image();
     img.src = src;
@@ -119,59 +186,18 @@ onMounted(() => {
   flex-shrink: 0;
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
 .loader {
   width: 100%;
   opacity: 0.5;
+  position: relative;
 }
+
 .frame {
   position: absolute;
-  bottom: -50px;
-
+  bottom: -90vh;
+  left: 0;
   width: 100%;
-
   object-fit: cover;
-
   opacity: 0;
-
-  animation: frameAnimation 3s steps(1) infinite;
-}
-
-.frame1 {
-  animation-delay: 0s;
-}
-
-.frame2 {
-  animation-delay: -1s;
-}
-
-.frame3 {
-  animation-delay: -2s;
-}
-
-@keyframes frameAnimation {
-  0% {
-    opacity: 1;
-  }
-
-  33.33% {
-    opacity: 1;
-  }
-
-  33.34% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
 }
 </style>
