@@ -387,7 +387,13 @@ const project = {
 };
 
 async function preloadResources() {
-  const videos = ["/project1/interaction1.mp4", "/project1/interaction2.mp4"];
+  const videos = [
+    "/project1/interaction1.mp4",
+    "/project1/interaction2.mp4",
+    "project21.mp4",
+    "project22.mp4",
+    "project23.mp4",
+  ];
 
   const images = [
     "/project1/about.jpg",
