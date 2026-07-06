@@ -59,17 +59,6 @@
         </div>
       </a>
 
-      <!-- <a
-        @click.prevent="navigateTo('/resume')"
-        class="pointer-events-auto cursor-pointer"
-      >
-        <div class="flow-item flex items-center justify-center gap-2">
-          <span class="side-symbol left">[</span>
-          <h3 class="item-text opacity-0">resume</h3>
-          <span class="side-symbol right">]</span>
-        </div>
-      </a> -->
-
       <div class="absolute bottom-0 w-screen px-4">
         <img ref="pipiRef" src="/pipi.png" alt="" class="opacity-0" />
       </div>
@@ -85,10 +74,40 @@ import { useTextLineAnimation } from "@/composables/useTextLineAnimation";
 import gsap from "gsap";
 import { useRouter } from "vue-router";
 
+/* ============================================================
+   Preload：儲存 Promise，讓 navigateTo 可以在換頁前 await 它
+   ============================================================ */
+function preloadImage(src: string): Promise<void> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve();
+    img.onerror = () => resolve();
+    img.src = src;
+  });
+}
+
+let resourcesReady: Promise<void> | null = null;
+
+function preloadResources(): Promise<void> {
+  const images = [
+    "/project2/p1.png",
+    "/project1/cover.png",
+    "/project3/b1.webp",
+    "/project4/cover.webp",
+    "/project5/cover.webp",
+    "/pipi.png",
+    "/book/road1.png",
+    "/book/road2.png",
+    "/book/road3.png",
+    "/book/illu.png",
+  ];
+
+  return Promise.all(images.map(preloadImage)).then(() => undefined);
+}
+
 const router = useRouter();
 const { registerContentEntrance } = useEntranceController();
 
-// ── 滑鼠跟隨文字 ──────────────────────────────────────────
 const trailTargetRef = ref<HTMLElement | null>(null);
 const flowContainer = ref<HTMLElement | null>(null);
 
@@ -122,7 +141,6 @@ const contactTextAnim = useTextLineAnimation(contactTextRef, {
   y: 14,
 });
 
-// ── pipi.png 的 scale/opacity 入場離場 ───────────────────────
 const pipiRef = ref<HTMLElement | null>(null);
 
 function setPipiInitial() {
@@ -220,6 +238,7 @@ onMounted(async () => {
 });
 
 onMounted(() => {
+  resourcesReady = preloadResources();
   trail = bind(trailTargetRef.value || document.body);
 });
 
@@ -227,7 +246,6 @@ onBeforeUnmount(() => {
   trail?.cleanup();
 });
 
-// ── 離場：trail 淡出 + items 倒轉 + 三段文字退場 + pipi 縮小淡出，全部一起播完才換頁 ──
 function reverseItems(): Promise<void> {
   return new Promise((resolve) => {
     masterTl.eventCallback("onReverseComplete", () => resolve());
@@ -248,9 +266,9 @@ async function navigateTo(to: string): Promise<void> {
     portfolioTextAnim.playOut({ duration: 0.4, y: -14 }),
     contactTextAnim.playOut({ duration: 0.4, y: -14 }),
     contactTextAnim2.playOut({ duration: 0.4, y: -14 }),
+    resourcesReady ?? Promise.resolve(),
   ]);
 
-  // 動畫都播完了，把三段文字的 DOM 還原成原本的樣子
   introTextAnim.restore();
   portfolioTextAnim.restore();
   contactTextAnim.restore();

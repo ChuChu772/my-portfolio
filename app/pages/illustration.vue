@@ -12,15 +12,20 @@
         </p>
       </div>
     </div>
+    <div class="absolute bottom-0 w-screen px-4">
+      <img src="/pipi.png" alt="" class="opacity-1 absolute" />
+    </div>
+    <div class="loader bottom-0 w-screen px-4">
+      <img src="/book/road1.png" class="frame frame1" />
+      <img src="/book/road2.png" class="frame frame2" />
+      <img src="/book/road3.png" class="frame frame3" />
+    </div>
     <div
       class="marquee flex absolute md:bottom-[-50px] bottom-0 left-0 w-full pointer-events-none overflow-hidden z-[-1]"
     >
       <div ref="track" class="marquee-track flex">
         <img v-for="(img, i) in [...images, ...images]" :key="i" :src="img" />
       </div>
-      <div
-        class="loader absolute md:bottom-[-3px] bottom-0 w-full h-full z-[-10] opacity-50"
-      ></div>
     </div>
   </div>
 </template>
@@ -124,24 +129,49 @@ onMounted(() => {
   }
 }
 .loader {
-  background-size: contain;
-  background-repeat: no-repeat;
-  animation: loading 3s steps(1) infinite;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 100%;
+  opacity: 0.5;
+}
+.frame {
+  position: absolute;
+  bottom: -50px;
+
+  width: 100%;
+
+  object-fit: cover;
+
+  opacity: 0;
+
+  animation: frameAnimation 3s steps(1) infinite;
 }
 
-@keyframes loading {
+.frame1 {
+  animation-delay: 0s;
+}
+
+.frame2 {
+  animation-delay: -1s;
+}
+
+.frame3 {
+  animation-delay: -2s;
+}
+
+@keyframes frameAnimation {
   0% {
-    background-image: url("/book/road1.png");
-    transform: translateY(0);
+    opacity: 1;
   }
-  33% {
-    background-image: url("/book/road2.png");
+
+  33.33% {
+    opacity: 1;
   }
-  66% {
-    background-image: url("/book/road3.png");
+
+  33.34% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 </style>

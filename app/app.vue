@@ -72,8 +72,8 @@ onMounted(async () => {
     new Promise((resolve) => setTimeout(resolve, 800)),
   ]);
 
-  showSplash.value = false; // splash 開始淡出
-  triggerEntrance(); // 同一時間：GooMorph 散開 + index 內容淡入，一起觸發
+  showSplash.value = false;
+  triggerEntrance();
 });
 </script>
 
