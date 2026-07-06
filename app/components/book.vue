@@ -97,7 +97,6 @@
           <slot name="cover">
             <img src="/book/book1.webp" alt="" />
           </slot>
-          <span class="hint" v-if="!coverArrived">點擊翻開</span>
         </div>
       </Transition>
     </div>
@@ -115,8 +114,8 @@ const bookReady = ref(false);
 
 let pageFlip = null;
 let PageFlipClass = null;
-let isReturning = false; // 是否處於「翻回封面 → floating-cover 滑回中間」流程
-let arrivedHandled = false; // 是否處於「點擊滑出去」流程
+let isReturning = false;
+let arrivedHandled = false;
 
 async function loadPageFlip() {
   if (PageFlipClass) return PageFlipClass;

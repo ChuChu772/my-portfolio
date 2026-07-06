@@ -27,7 +27,7 @@
   <div
     class="h-[100svh] w-screen absolute left-0 flex items-end mt-12 bottom-0 md:bottom-[-80px] lg:bottom-[-110px]"
   >
-    <div class="loader w-screen border">
+    <div class="loader w-screen">
       <img
         v-for="(src, i) in roadFrames"
         :key="src"
@@ -93,7 +93,7 @@ function startSlideshow() {
     }
 
     currentIndex = nextIndex;
-  }, 2000);
+  }, 1000);
 }
 
 onBeforeUnmount(() => {
@@ -151,23 +151,6 @@ onMounted(async () => {
   justify-content: center;
   position: fixed;
   z-index: -1;
-}
-
-.cover-btn {
-  width: clamp(140px, 22vw, 320px);
-  height: clamp(220px, 37vw, 520px);
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 2px 8px 8px 2px;
-  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.cover-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 6px 8px 28px rgba(0, 0, 0, 0.4);
 }
 
 .marquee {
