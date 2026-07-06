@@ -1,7 +1,6 @@
 <template>
   <Header />
 
-  <!-- 動畫 overlay -->
   <div ref="overlayRef" class="fixed inset-0 z-50 pointer-events-none">
     <div
       v-for="(project, index) in projects"
@@ -15,7 +14,6 @@
     ref="sectionRef"
     class="grid-layout8 !py-0 !w-screen opacity-0 max-md:!gap-2 !mt-12 sm:!mt-20 md:!mt-0"
   >
-    <!-- 上：專案列表 -->
     <div
       class="md:col-span-2 col-span-3 md:py-[50vh] !py-0 flex flex-col mb-10 md:mb-0 md:justify-center justify-end"
     >
@@ -23,7 +21,7 @@
         v-for="(project, index) in projects"
         :key="index"
         :ref="(el) => (itemRefs[index] = el)"
-        class="pro cursor-pointer py-1 transition-all duration-500 py-2"
+        class="pro !cursor-pointer py-1 transition-all duration-500 py-2"
         :class="[
           index === activeIndex ? 'py-4 pl-2 opacity-100' : ' opacity-25',
         ]"
@@ -43,7 +41,6 @@
       </div>
     </div>
 
-    <!-- 中：圖片 -->
     <div
       class="md:col-span-4 col-span-3 relative md:sticky md:top-0 flex md:h-screen w-full items-center justify-center max-md:aspect-[16/9]"
     >
@@ -53,12 +50,17 @@
         :ref="(el) => (imgRefs[index] = el)"
         :src="project.image"
         @click="goProject(projects[activeIndex].id)"
-        class="absolute w-full aspect-[16/9] md:px-8 transition-all duration-700 ease-out object-contain clip-path-[polygon(0_0,100%_0,100%_100%,0%_100%)]"
-        :class="[
+        class="peer absolute cursor-pointer w-full aspect-[16/9] md:px-8 transition-all duration-700 ease-out object-contain hover:opacity-60"
+        :class="
           index === activeIndex
             ? 'scale-100 opacity-100'
-            : 'scale-95 opacity-0',
-        ]"
+            : 'scale-95 opacity-0 pointer-events-none'
+        "
+      />
+
+      <!-- Hover Icon -->
+      <div
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-black pointer-events-none opacity-0 scale-0 rotate-0 transition-all duration-700 ease-out peer-hover:opacity-100 peer-hover:scale-100 peer-hover:rotate-180"
       />
     </div>
     <div
@@ -68,7 +70,7 @@
     >
       <h5>GO TO PROJECT</h5>
     </div>
-    <!-- 下：文字 -->
+
     <div
       ref="rightPanelRef"
       class="md:col-span-2 col-span-3 md:sticky md:top-0 flex md:h-screen md:items-center md:justify-center relative md:hidden lg:flex"
