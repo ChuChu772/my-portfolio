@@ -380,8 +380,8 @@ import ProjectLayout from "~/components/ProjectLayout.vue";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
 useSeoMeta({
-  title: "La1ako",
-  description: "PiPiChouPortfolio",
+  title: "PiPiChouPortfolio",
+  description: "Project La1ako",
   ogImage: "/project1/cover.png",
 });
 
@@ -449,15 +449,15 @@ async function preloadResources() {
   const images = [
     "/project1/about.jpg",
     "/project1/cover.png",
-    "ia.png",
-    "ia1.png",
-    "ia2.png",
-    "ia3.png",
-    "ia4.png",
-    "rwd1.png",
-    "rwd2.png",
-    "rwd3.png",
-    "p1.png",
+    "/project1/ia.png",
+    "/project1/ia1.png",
+    "/project1/ia2.png",
+    "/project1/ia3.png",
+    "/project1/ia4.png",
+    "/project1/rwd1.png",
+    "/project1/rwd2.png",
+    "/project1/rwd3.png",
+    "/project1/p1.png",
   ];
 
   const preloadImage = (src) =>

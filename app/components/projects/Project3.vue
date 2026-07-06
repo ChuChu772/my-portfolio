@@ -212,8 +212,8 @@ import Player from "@vimeo/player";
 import ProjectLayout from "~/components/ProjectLayout.vue";
 
 useSeoMeta({
-  title: "氣息的反饋",
-  description: "PiPiChouPortfolio",
+  title: "PiPiChouPortfolio",
+  description: "Project 氣息的反饋",
   ogImage: "/project3/b1.webp",
 });
 
@@ -247,7 +247,7 @@ async function preloadResources() {
   const images = [
     "/project3/b1.webp",
     "/project3/b2.webp",
-    "/project3/b3.webp,",
+    "/project3/b3.webp",
     "/project3/b4.webp",
     "/project3/b5.webp",
     "/project4/cover.webp",

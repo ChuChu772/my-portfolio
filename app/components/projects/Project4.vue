@@ -113,8 +113,8 @@
 import ProjectLayout from "~/components/ProjectLayout.vue";
 
 useSeoMeta({
-  title: "共生",
-  description: "PiPiChouPortfolio",
+  title: "PiPiChouPortfolio",
+  description: "Project 共生",
   ogImage: "/project4/cover.webp",
 });
 
