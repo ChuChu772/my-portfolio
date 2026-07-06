@@ -88,36 +88,20 @@ const NS = "http://www.w3.org/2000/svg";
 
 const size = reactive({ width: 700, height: 700 });
 
-// ---------- 裝置能力偵測（決定要不要放輕特效） ----------
-// 注意：這幾個值故意先給「桌機預設值」，真正的偵測在 onMounted 裡的
-// detectDevice() 執行，確保一定是在瀏覽器環境、畫面真正掛載之後才判斷，
-// 不會被 SSR（此時沒有 window）或程式碼執行時機問題誤判成桌機。
 const isMobile = ref(false);
-let isCoarsePointerFlag = false; // 給 setupFollow / pointer 事件判斷用
+let isCoarsePointerFlag = false;
 
-// goo 效果的模糊半徑：桌機清晰厚重，手機大幅降低運算量
-// （SVG feGaussianBlur 在多數手機瀏覽器是走 CPU/軟體光柵化，半徑越大越貴）
 const gooStdDeviation = ref(30);
 const layerBlurStdDeviation = ref(35);
 
-// const useGooFilter = computed(() => gooStdDeviation.value > 0);
 const useGooFilter = computed(
   () => !isMobile.value && gooStdDeviation.value > 0,
 );
 
-// 重要：feGaussianBlur 的 stdDeviation="0" 在部分手機瀏覽器（尤其 WebKit）
-// 有個 bug，濾鏡輸出會直接變透明，而不是「不模糊、正常顯示原圖」。
-// 所以當數值是 0 的時候，直接不套用這層 filter，而不是套用 stdDeviation=0 的 filter，
-// 這樣既避開 bug，也順便再省一點運算。
 const useLayerBlur = computed(() => layerBlurStdDeviation.value > 0);
 
-// 手機上每層 blob 少放一點，動畫更新的路徑數量直接減半
-// -- 折衷版：從 2 顆調成 3 顆，goo 融合感比較夠，但還是比桌機的 4/5 顆輕 --
-// 想改回最省效能的版本，把這行數字換回 2
 const MOBILE_MAX_BLOBS_PER_LAYER = 3;
 
-// 這幾個會依偵測結果在 detectDevice() 裡被重新賦值，
-// 用 let 而不是 const 是因為要等瀏覽器環境確定後才能決定真正的值
 let BLOB_POINTS = 16;
 let RESIZE_DEBOUNCE = 150;
 
@@ -126,15 +110,12 @@ let resizeObserver = null;
 let resizeTimer = null;
 let followA = null;
 let followB = null;
-let hasDispersed = false; // 是否已經播放過「散開」動畫
-let isDispersing = false; // 散開動畫「正在播放中」，避免被 resize 打斷
+let hasDispersed = false;
+let isDispersing = false;
 
-// instancesA / instancesB 存放每顆 blob 的完整狀態，
-// 才能在 disperse() 的時候精準地 kill 掉「聚集階段」的漂浮 tween、換成散開動畫
 let instancesA = [];
 let instancesB = [];
 
-// ---------- 形狀產生 ----------
 function getPoints(cx, cy, radii) {
   const n = radii.length;
   return radii.map((r, i) => {
@@ -161,10 +142,6 @@ function pointsToPath(points, tension = 6) {
   return d + "Z";
 }
 
-// 手機上用比較少的控制點畫 blob（8 點 vs 16 點），
-// path 資料量減半，attr:{d:...} 逐幀重算的成本也跟著降低
-// （實際數值由 detectDevice() 在 onMounted 時決定，見上方 let BLOB_POINTS）
-
 function circlePath(cx, cy, r, numPoints = BLOB_POINTS) {
   const radii = new Array(numPoints).fill(r);
   return pointsToPath(getPoints(cx, cy, radii));
@@ -186,7 +163,6 @@ function blobPath(
   return pointsToPath(getPoints(cx, cy, radii));
 }
 
-// ---------- 兩層各自的 blob 設定（都用百分比，是「散開後」的最終位置） ----------
 const blobsAFull = [
   {
     xPct: 22,
@@ -292,8 +268,6 @@ const blobsBFull = [
   },
 ];
 
-// 手機版直接裁掉多餘的 blob，減少同時跑的 tween 數量
-// 實際會不會裁切，要等 detectDevice() 判斷出 isMobile 後才決定（見下方 onMounted）
 let blobsA = blobsAFull;
 let blobsB = blobsBFull;
 
@@ -320,7 +294,6 @@ function clearLayers() {
   instancesB = [];
 }
 
-// 啟動「散開後」的最終漂浮循環（繞著指定位置小範圍漂浮）
 function startFinalFloat(inst) {
   const floatTween = gsap.to(inst.path, {
     x: inst.abs.dx,
@@ -407,20 +380,16 @@ function buildBlobs(phase) {
   );
 }
 
-// resize 時「更新既有 blob」而不是整批重建 DOM，
-// 避免手機瀏覽器工具列收合造成的高度變化觸發大量重建
 function updateBlobsInPlace() {
   const updateOne = (inst) => {
     const abs = toAbs(inst.b);
     inst.abs = abs;
-    // 更新底層座標，避免 tween 目標值過期；已在跑的 float/morph tween 讓它自然收斂即可
     inst.path.setAttribute("d", circlePath(abs.cx, abs.cy, abs.r));
   };
   instancesA.forEach(updateOne);
   instancesB.forEach(updateOne);
 }
 
-// ---------- 散開動畫：中控台呼叫這個 ----------
 function disperseInstance(inst, i, onDone) {
   inst.clusterFloatTween?.kill();
   inst.clusterFloatTween = null;
@@ -447,7 +416,7 @@ function disperseAll() {
   let doneCount = 0;
   const markDone = () => {
     doneCount++;
-    if (doneCount >= total) isDispersing = false; // 全部動畫真正播完才解除保護
+    if (doneCount >= total) isDispersing = false;
   };
 
   instancesA.forEach((inst, i) => disperseInstance(inst, i, markDone));
@@ -460,8 +429,6 @@ function enterClustered() {
   buildBlobs("clustered");
   registerGooDisperse(disperseAll);
 }
-
-// ---------- 滑鼠 / 觸控跟隨（手機直接不掛，省事件與 quickTo 開銷） ----------
 function setupFollow() {
   if (isCoarsePointerFlag) return;
 
@@ -513,10 +480,7 @@ function handlePointerLeave() {
   followB?.y(0);
 }
 
-// ---------- resize ----------
-// 手機瀏覽器網址列收合/展開常常只改變「高度」，寬度不變，
-// 這種情況不需要重建 blob，跳過即可，大幅減少不必要的重排
-const HEIGHT_ONLY_CHANGE_THRESHOLD = 120; // px，小於這個高度差且寬度沒變，視為工具列造成
+const HEIGHT_ONLY_CHANGE_THRESHOLD = 120;
 
 let lastWidth = 0;
 let lastHeight = 0;
@@ -541,14 +505,12 @@ function handleResize(entries) {
 
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    // 散開動畫還在播放中，不要重建，避免瞬間打斷、失去移動過程
     if (isDispersing) return;
 
     lastWidth = width;
     lastHeight = height;
 
     if (isLikelyToolbarShift) {
-      // 只是工具列高度變化：原地更新座標即可，不必整批砍掉重建 DOM/tween
       updateBlobsInPlace();
       return;
     }
@@ -557,8 +519,6 @@ function handleResize(entries) {
   }, RESIZE_DEBOUNCE);
 }
 
-// 真正的裝置偵測：一定要在瀏覽器環境、掛載後才跑，
-// 避免 SSR（沒有 window）或提早執行時機造成誤判成桌機
 function detectDevice() {
   const coarsePointer =
     typeof window !== "undefined" &&
@@ -571,19 +531,11 @@ function detectDevice() {
   isCoarsePointerFlag = coarsePointer;
   isMobile.value = mobile;
 
-  // ---------------------------------------------------------------------
-  // 折衷版數值：手機也開 goo，只是比桌機輕一點，不是完全比照桌機、也不是完全關掉。
-  // 每一行後面都用註解留著「完全比照桌機」跟「原本最省效能」兩種數字，
-  // 想改回任何一種版本，直接替換對應那行即可。
-  // ---------------------------------------------------------------------
   gooStdDeviation.value = mobile ? 20 : 30;
-  // 完全比照桌機：mobile ? 30 : 30      原本最省效能（關閉 goo）：mobile ? 0 : 30
 
   layerBlurStdDeviation.value = mobile ? 22 : 35;
-  // 完全比照桌機：mobile ? 35 : 35      原本最省效能：mobile ? 0 : 35
 
   BLOB_POINTS = mobile ? 12 : 16;
-  // 完全比照桌機：16                    原本最省效能：8
 
   RESIZE_DEBOUNCE = mobile ? 250 : 150;
   blobsA = mobile
@@ -592,16 +544,11 @@ function detectDevice() {
   blobsB = mobile
     ? blobsBFull.slice(0, MOBILE_MAX_BLOBS_PER_LAYER)
     : blobsBFull;
-  // blob 數量由上面的 MOBILE_MAX_BLOBS_PER_LAYER 控制（目前是 3，原本是 2）
-
-  // 除錯用：正式上線前可以先打開，在手機瀏覽器主控台確認判斷是否正確
-  // console.log('[GooStage] detectDevice ->', { coarsePointer, narrowViewport, mobile, width: window.innerWidth });
 }
 
 onMounted(() => {
   detectDevice();
 
-  // 手機上把 GSAP 全域更新頻率降到 30fps，減少每秒的重算/重繪次數
   if (isMobile.value) {
     gsap.ticker.fps(30);
   }
@@ -628,9 +575,6 @@ onMounted(() => {
   resizeObserver.observe(stageRef.value);
 });
 
-// keepalive 復活時：
-// 1. 先斷開又重建 ResizeObserver，避免「凍結→復活」被瀏覽器誤判成一次 resize
-// 2. 用當下量到的真實尺寸重新聚集回中心
 onActivated(() => {
   if (resizeObserver) {
     resizeObserver.disconnect();
@@ -651,8 +595,6 @@ onActivated(() => {
   resizeObserver.observe(stageRef.value);
 });
 
-// keepalive 情境下離開頁面時觸發（元件不會被銷毀，只是暫停）
-// 主動斷開 ResizeObserver，避免它在畫面看不到的時候持續運作、累積誤判的 resize 事件
 onDeactivated(() => {
   if (resizeObserver) {
     resizeObserver.disconnect();
