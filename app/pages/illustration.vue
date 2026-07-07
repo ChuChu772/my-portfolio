@@ -5,10 +5,7 @@
     <div class="grid-layout8">
       <div class="lg:col-span-2 md:col-span-3 col-span-2 mt-12">
         <p ref="introTextRef">
-          Drawing has been part of my world for as long as I can remember. This
-          collection is a renewed interpretation of my 2024 illustration
-          portfolio, bringing together stories, memories, and dreams that have
-          quietly grown with me over the years.
+          {{ t("illustration.title") }}
         </p>
       </div>
     </div>
@@ -44,6 +41,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useTextLineAnimation } from "@/composables/useTextLineAnimation";
 import gsap from "gsap";
+const { t } = useI18n();
 
 useSeoMeta({
   title: "PiPi's Illustration",
