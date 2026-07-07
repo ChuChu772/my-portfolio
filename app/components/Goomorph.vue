@@ -100,7 +100,7 @@ const useGooFilter = computed(
 
 const useLayerBlur = computed(() => layerBlurStdDeviation.value > 0);
 
-const MOBILE_MAX_BLOBS_PER_LAYER = 3;
+const MOBILE_MAX_BLOBS_PER_LAYER = 2;
 
 let BLOB_POINTS = 16;
 let RESIZE_DEBOUNCE = 150;
@@ -163,7 +163,18 @@ function blobPath(
   return pointsToPath(getPoints(cx, cy, radii));
 }
 
-const blobsAFull = [
+const blobsAFull = computed(() => [
+  {
+    xPct: 26,
+    yPct: 74,
+    rPct: isMobile.value ? 20 : 8,
+    fill: "url(#g-c)",
+    seed: 4.0,
+    morphDur: 2.8,
+    floatDur: 6.0,
+    dxPct: isMobile.value ? 10 : 70,
+    dyPct: isMobile.value ? -10 : -30,
+  },
   {
     xPct: 22,
     yPct: 24,
@@ -187,17 +198,6 @@ const blobsAFull = [
     dyPct: 6,
   },
   {
-    xPct: 26,
-    yPct: 74,
-    rPct: 8,
-    fill: "url(#g-c)",
-    seed: 4.0,
-    morphDur: 2.8,
-    floatDur: 6.0,
-    dxPct: 70,
-    dyPct: -30,
-  },
-  {
     xPct: 74,
     yPct: 76,
     rPct: 8,
@@ -208,7 +208,7 @@ const blobsAFull = [
     dxPct: -40,
     dyPct: -40,
   },
-];
+]);
 
 const blobsBFull = [
   {
@@ -268,7 +268,7 @@ const blobsBFull = [
   },
 ];
 
-let blobsA = blobsAFull;
+let blobsA = blobsAFull.value;
 let blobsB = blobsBFull;
 
 function toAbs(b) {
@@ -539,8 +539,8 @@ function detectDevice() {
 
   RESIZE_DEBOUNCE = mobile ? 250 : 150;
   blobsA = mobile
-    ? blobsAFull.slice(0, MOBILE_MAX_BLOBS_PER_LAYER)
-    : blobsAFull;
+    ? blobsAFull.value.slice(0, MOBILE_MAX_BLOBS_PER_LAYER)
+    : blobsAFull.value;
   blobsB = mobile
     ? blobsBFull.slice(0, MOBILE_MAX_BLOBS_PER_LAYER)
     : blobsBFull;

@@ -17,15 +17,16 @@
     </div>
 
     <div
-      class="marquee flex absolute bottom-0 md:bottom-[-50px] left-0 w-full pointer-events-none overflow-hidden z-[-1]"
+      class="marquee flex absolute bottom-0 md:bottom-[0px] left-0 w-full pointer-events-none overflow-hidden z-[-1]"
     >
       <div ref="track" class="marquee-track flex">
         <img v-for="(img, i) in [...images, ...images]" :key="i" :src="img" />
       </div>
     </div>
   </div>
+
   <div
-    class="h-[100svh] w-screen absolute left-0 flex items-end mt-12 bottom-0 md:bottom-[-80px] lg:bottom-[-110px]"
+    class="h-[15svh] md:h-[28svh] w-screen absolute left-0 opacity-80 flex items-end bottom-0"
   >
     <div class="loader w-screen">
       <img
@@ -163,25 +164,11 @@ onMounted(async () => {
   flex-shrink: 0;
 }
 
-/* 給 loader 明確的高度，讓內部 absolute 定位的圖片有依據撐滿，
-   並依斷點調整高度比例，配合 RWD */
 .loader {
   width: 100%;
   opacity: 0.5;
+  height: 100%;
   position: relative;
-  height: 30vh;
-}
-
-@media (min-width: 768px) {
-  .loader {
-    height: 40vh;
-  }
-}
-
-@media (min-width: 1024px) {
-  .loader {
-    height: 50vh;
-  }
 }
 
 .frame {

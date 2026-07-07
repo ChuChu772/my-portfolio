@@ -50,7 +50,7 @@
         :ref="(el) => (imgRefs[index] = el)"
         :src="project.image"
         @click="goProject(projects[activeIndex].id)"
-        class="peer absolute cursor-pointer w-full aspect-[16/9] md:px-8 transition-all duration-700 ease-out object-contain hover:opacity-60"
+        class="peer absolute cursor-pointer w-full aspect-[16/9] md:px-8 transition-all duration-700 ease-out object-contain md:hover:opacity-60"
         :class="
           index === activeIndex
             ? 'scale-100 opacity-100'
@@ -58,9 +58,8 @@
         "
       />
 
-      <!-- Hover Icon -->
       <div
-        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-black pointer-events-none opacity-0 scale-0 rotate-0 transition-all duration-700 ease-out peer-hover:opacity-100 peer-hover:scale-100 peer-hover:rotate-180"
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-black pointer-events-none opacity-0 scale-0 rotate-0 transition-all duration-700 ease-out md:peer-hover:opacity-100 md:peer-hover:scale-100 md:peer-hover:rotate-180"
       />
     </div>
     <div
