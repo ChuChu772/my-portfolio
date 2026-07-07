@@ -6,7 +6,7 @@
       v-for="(project, index) in projects"
       :key="index"
       :ref="(el) => (cardRefs[index] = el)"
-      class="absolute bg-black"
+      class="absolute"
     />
   </div>
 
