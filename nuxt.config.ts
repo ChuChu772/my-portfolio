@@ -7,7 +7,24 @@ export default defineNuxtConfig({
 
   plugins: ["~/plugins/gsap.client.ts"],
 
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/i18n", "@nuxtjs/tailwindcss"],
+
+  i18n: {
+    locales: [
+      { code: "zh", name: "中文", file: "zh.json" },
+      { code: "en", name: "English", file: "en.json" },
+    ],
+    defaultLocale: "en",
+    langDir: "locales/",
+    strategy: "no_prefix",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "i18n_redirected",
+      redirectOn: "root",
+      cookieCrossOrigin: false,
+      alwaysRedirect: false,
+    },
+  },
 
   app: {
     head: {

@@ -32,7 +32,7 @@
       </div>
       <div class="flex flex-col gap-4 justify-between">
         <h3 class="w-full">
-          「共生」延伸自我先前的聲音裝置創作。當時的作品以鐵環與釣魚線構成，透過馬達低速牽動，使鐵環在持續循環中彼此輕微碰撞，產生細碎而節制的聲響。這種聲音並不強烈，而是帶有一種近似對話的節奏——像是「碰到了」「借過一下」般的輕聲互動。它讓我開始思考：若人與人同處於一個共享空間中，理想的關係是否可以是一種不侵略、彼此讓位的共存狀態。
+          {{ t("project4.VisualConcept") }}
         </h3>
       </div>
     </div>
@@ -54,23 +54,23 @@
     <div class="sm:col-span-4 lg:col-span-4 col-span-3 gap-4 flex flex-col">
       <div class="flex gap-4 justify-between flex-col md:flex-row">
         <h3 class="w-full">
-          基於這個運作邏輯，我進一步將感知從機械結構延伸至身體互動，發展出《共生》。作品以六隻陶製鳥為載體，每一隻鳥的喙部皆以金屬結構延伸，使其具備導電性。觀者透過觸碰鳥喙參與作品，進而觸發對應的旋律片段。每隻鳥皆對應一段獨立旋律，當個別被觸發時，聲音以片段的形式存在；而當六隻鳥同時被觸發時，這些旋律便會相互交織，形成一首完整的樂曲。
+          {{ t("project4.InteractionDesign1") }}
         </h3>
         <h3 class="w-full">
-          這樣的互動機制使作品必須透過多人共同參與才能完整成立，也讓聲音不再只是單純的聆聽對象，而成為人與人之間關係的媒介。作品將聲音拆解為彼此依存的單位，每一個人的參與都是不可取代的一部分。對我而言，理想的共生並非追求一致，而是在差異之中互相影響、彼此調節，在共享的空間裡共同構成一個完整而平衡的整體。
+          {{ t("project4.InteractionDesign2") }}
         </h3>
       </div>
     </div>
 
     <div
-      class="lg:col-span-8 sm:col-span-6 col-span-3 md:flex-row md:col-span-6 col-span-3 flex flex-col gap-4 items-stretch mb-[var(--margin)]"
+      class="lg:col-span-8 sm:col-span-6 col-span-3 md:flex-row md:col-span-6 col-span-3 flex flex-col gap-3 sm:gap-4 items-stretch mb-[var(--margin)]"
     >
       <!-- 左側大圖 -->
       <div class="flex-1">
         <img src="/project4/p44.webp" class="w-full h-full object-cover" />
       </div>
       <!-- 右側兩張上下疊 -->
-      <div class="flex-1 flex gap-4">
+      <div class="flex-1 flex sm:gap-4 gap-3">
         <div class="flex-1">
           <img src="/project4/p43.webp" class="w-full h-full object-cover" />
         </div>
@@ -92,17 +92,13 @@
       </div>
       <div class="flex flex-col gap-4 justify-between">
         <h3 class="w-full">
-          作品以即燒陶土製作六隻鳥的造型，並於鳥喙部位結合鐵絲與金屬螺絲作為導電觸點。當使用者接觸鳥喙時，人體形成導電迴路，觸發訊號傳送至
-          Makey Makey 感測裝置。 <br />
-          Makey Makey 將接收到的導電訊號轉換為鍵盤輸入訊號，並傳送至電腦端。
-          <br />
-          透過 Ableton Live 的 Key Mapping
-          功能，將各組鍵盤訊號分別對應至不同音軌與聲音素材。 <br />
-          <br />
-          系統共配置六組獨立觸發通道，每隻鳥皆對應一組聲音輸出。當多個觸點同時被觸發時，Ableton
-          Live 會同步播放對應音軌，形成多聲部的聲音組合與即時互動效果。
-          整體技術架構由導電觸點、Makey Makey 感測器、電腦輸入系統及 Ableton
-          Live 音訊控制流程所組成，將實體觸碰行為轉換為即時聲音輸出。
+          {{ t("project4.TechnicalImplementation1") }}
+        </h3>
+        <h3 class="w-full">
+          {{ t("project4.TechnicalImplementation2") }}
+        </h3>
+        <h3 class="w-full">
+          {{ t("project4.TechnicalImplementation3") }}
         </h3>
       </div>
     </div>
@@ -111,6 +107,7 @@
 
 <script setup>
 import ProjectLayout from "~/components/ProjectLayout.vue";
+const { t } = useI18n();
 
 useSeoMeta({
   title: "PiPiChouPortfolio",
@@ -118,11 +115,9 @@ useSeoMeta({
   ogImage: "/project4/cover.webp",
 });
 
-const project = {
-  title: "共生",
-  description:
-    "每隻鳥配有一段旋律，觀者觸碰鳥喙即可觸發音樂。當六隻鳥同時被觸發，六段旋律會組合成完整小樂曲。裝置需要六人協作，概念來自我對於人與人相處的理想狀態：每個人各自不同，卻在同一空間中互相影響、達成平衡。每段旋律，如同每個人的存在，都是不可或缺的。",
-
+const project = computed(() => ({
+  title: t("project4.title"),
+  description: t("project4.description"),
   roles: ["Creative Designer"],
 
   link: "",
@@ -138,7 +133,8 @@ const project = {
       ],
     },
   ],
-};
+}));
+
 async function preloadResources() {
   const images = [
     "/project4/cover.webp",

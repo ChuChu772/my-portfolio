@@ -25,15 +25,17 @@
     class="grid-layout8 justify-end items-end flex !mt-[var(--margin)] !pb-0"
     id="Visual Concept Development"
   >
-    <div class="lg:col-span-5 md:col-span-4 col-span-2 gap-4 flex flex-col">
+    <div class="lg:col-span-5 md:col-span-4 col-span-3 gap-4 flex flex-col">
       <div class="gap-2 flex">
         <h5 class="tracking-[0.95px]">01 . 01</h5>
         <h4 class="">Visual Concept Development</h4>
       </div>
-      <div class="flex gap-4 justify-between">
+      <div class="flex flex-col gap-4 justify-between">
         <h3 class="w-full">
-          「我憎恨孤獨的感覺，憎恨那個渴望陪伴的自己。」<br />
-          這是創作發想之初，盤踞在我心底的念頭。我曾相信孤單是懦弱的徵兆，相信所有關係裡的裂縫與爭吵，都源於自己不夠堅強。我渴望成為一個不需要依賴的人，然而這樣的期許，卻不斷與現實中真實的自己撕扯、對峙。
+          {{ t("project3.con") }}
+        </h3>
+        <h3 class="w-full">
+          {{ t("project3.VisualConcept1") }}
         </h3>
       </div>
     </div>
@@ -47,10 +49,7 @@
       class="lg:col-span-3 md:col-span-2 col-span-3 gap-4 flex flex-col order-2 md:order-1"
     >
       <h3 class="w-full">
-        當我開始真正凝視「孤獨」這個情緒，試著不再迴避它，我慢慢明白，孤獨不是「1」的狀態，而是「2」的缺席。
-        它不是一種匱乏的本質，而是一種關係的餘震，是期待回應卻落入沉默時，身體所留下的殘響。<br />
-        於是我開始思考：在得不到回應的處境裡，陪伴還能以什麼形式存在？<br />
-        作品《氣息的反饋》由此誕生。我讓自己的呼吸成為媒介，當外部的回應缺席，呼吸作為最原始、最持續的生命信號，成為一種自我擁抱的方式。不需要等待另一個人，你的身體本身就在回應你。
+        {{ t("project3.VisualConcept2") }}
       </h3>
     </div>
     <div
@@ -73,7 +72,7 @@
       </div>
       <div class="flex gap-4 justify-between">
         <h3 class="w-full">
-          作品共發展出三種樣式，分別對應頸部與手腕的穿戴形式。其中一款參照了醫療膠布的結構語言——既想傳遞它作為急救物件的隱喻（我們時常需要在情感上為自己急救），也希望這個設計能夠無縫融入日常，成為一種隨身攜帶的、細微的自我照護。
+          {{ t("project3.GraphicSystemDesign") }}
         </h3>
       </div>
     </div>
@@ -87,18 +86,16 @@
 
   <div
     class="grid-layout8 !mb-[var(--margin)] justify-end items-end flex"
-    id="Interaction Design"
+    id="Technical Implementation"
   >
     <div class="lg:col-span-3 md:col-span-3 col-span-3 gap-4 flex flex-col">
       <div class="gap-2 flex">
         <h5 class="tracking-[0.95px]">01 . 03</h5>
-        <h4>Interaction Design</h4>
+        <h4>Technical Implementation</h4>
       </div>
       <div class="flex gap-4 justify-between">
         <h3 class="w-full">
-          系統以 Arduino Uno
-          為控制核心，透過聲音傳感器擷取環境聲響，並依據感測結果控制 L298N
-          馬達驅動模組與電磁閥。<br />當偵測到聲音訊號時，系統啟動充氣馬達並開啟氣體通道，使氣囊膨脹；當訊號消失時，系統切換至抽氣模式，將氣體回收並使裝置恢復原始狀態。整體控制流程包含聲音感測、訊號判斷、氣動控制與機械運動輸出四個階段。
+          {{ t("project3.TechnicalImplementation") }}
         </h3>
       </div>
     </div>
@@ -111,7 +108,7 @@
   </div>
 
   <div class="grid-layout8 my-[var(--margin)] justify-start items-start">
-    <div class="col-span-1 gap-4 flex flex-col">
+    <div class="col-span-2 gap-4 flex flex-col">
       <div class="gap-2 flex">
         <h5 class="tracking-[0.95px]">02 . 01</h5>
         <h4 class="">Project Showcase Video</h4>
@@ -120,7 +117,7 @@
 
     <!-- 縮圖預覽：自動播放 + loop 的 Vimeo -->
     <div
-      class="col-span-6 w-full aspect-[16/9] bg-black cursor-pointer overflow-hidden"
+      class="lg:col-span-6 md:col-span-4 col-span-3 w-full aspect-[16/9] bg-black cursor-pointer overflow-hidden"
       @click="openModal"
     >
       <iframe
@@ -136,7 +133,7 @@
     <Teleport to="body">
       <div
         v-show="open"
-        class="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center transition-opacity duration-300"
+        class="fixed inset-0 z-[999] bg-black/40 backdrop-blur flex items-center justify-center transition-opacity p-3 duration-300"
         :class="
           open
             ? 'opacity-100 pointer-events-auto'
@@ -144,7 +141,7 @@
         "
         @click.self="close"
       >
-        <div class="w-full max-w-6xl h-[80vh] relative bg-black group">
+        <div class="w-full max-w-6xl aspect-video relative group">
           <iframe
             ref="vimeoRef"
             class="w-full h-full object-contain"
@@ -155,15 +152,15 @@
 
           <!-- 你的 UI 完全不變 -->
           <div
-            class="absolute bottom-0 left-0 w-full px-4 py-4 bg-gradient-to-t from-black/90 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            class="absolute bottom-0 left-0 w-full px-3 py-2 sm:py-4 sm:px-4 bg-gradient-to-t from-black/90 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
-            <div class="w-full flex justify-between pb-4">
+            <div class="w-full flex justify-between sm:mb-4 mb-2">
               <h4>{{ formatTime(currentTime) }}</h4>
               <h4>{{ formatTime(duration) }}</h4>
             </div>
 
             <div
-              class="relative w-full h-[2px] bg-white/20 rounded-full cursor-pointer mb-4"
+              class="relative w-full h-[2px] bg-white/20 rounded-full cursor-pointer sm:mb-4 mb-2"
             >
               <div
                 class="absolute top-0 left-0 h-full bg-white rounded-full"
@@ -210,6 +207,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Player from "@vimeo/player";
 import ProjectLayout from "~/components/ProjectLayout.vue";
+const { t } = useI18n();
 
 useSeoMeta({
   title: "PiPiChouPortfolio",
@@ -219,10 +217,9 @@ useSeoMeta({
 
 gsap.registerPlugin(ScrollTrigger);
 
-const project = {
-  title: "氣息的反饋",
-  description:
-    "這是一個穿戴式裝置，透過使用者的呼吸控制裝置收縮，模擬陪伴的感覺。作品源於對孤獨情緒的探索：孤獨不是單一的存在，而是缺席的感受與未被回應的渴望。裝置設計穿戴於頸部與手腕，並融入生活化的元素，如膠布式樣，讓陪伴在日常中自然發生。",
+const project = computed(() => ({
+  title: t("project3.title"),
+  description: t("project3.description"),
   roles: ["Creative Designer", "UI/UX Designer", "Full-Stack Developer"],
   link: "",
   sections: [
@@ -232,7 +229,7 @@ const project = {
       items: [
         "Visual Concept Development",
         "Graphic System Design",
-        "Interaction Design",
+        "Technical Implementation",
       ],
     },
     {
@@ -241,7 +238,7 @@ const project = {
       items: ["Project Showcase Video"],
     },
   ],
-};
+}));
 
 async function preloadResources() {
   const images = [

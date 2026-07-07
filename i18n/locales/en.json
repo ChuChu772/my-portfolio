@@ -1,0 +1,49 @@
+{
+  "project1": {
+    "title": "La1ako",
+    "description": "Designed and developed an immersive e-commerce experience for La1ako, transforming the online store into an extension of the brand identity. Beyond product browsing and purchasing, the website integrates interactive storytelling, motion design, and refined visual details to create an emotional connection between users and the brand.",
+    "BrandStrategy1": "La1ako began as a handcrafted resin art practice and has evolved into an independent lifestyle brand spanning jewelry, apparel, and everyday objects. Defined by transparency, lightness, and layered materiality, each handcrafted piece preserves its unique character while transforming ordinary objects into emotionally meaningful collectibles.",
+    "BrandStrategy2": "The digital experience reflects the brand’s dreamlike and delicate aesthetic through soft visual language, interactive moments, and narrative-driven content. The website is designed not only as a storefront but also as a space where visitors can discover the stories, craftsmanship, and emotions behind each creation.",
+    "InformationArchitecture": "The information architecture prioritizes both product discovery and brand storytelling. Content is structured to guide users seamlessly between collections, brand narratives, and purchasing actions, creating a balanced journey between exploration and conversion.",
+    "StandardPurchaseFlow": "As La1ako is an emerging independent brand with a curated product range, the experience focuses on brand immersion rather than extensive catalog browsing. Interactive content, visual storytelling, and thoughtful content hierarchy strengthen brand recall and engagement, while a streamlined purchasing flow minimizes friction and enables quick, intuitive checkout.",
+    "FullStackDevelopment": "Independently designed and developed the full-stack e-commerce platform using Vue, Nuxt, Node.js, and MySQL. Built product management, shopping cart, order processing, and checkout systems, while integrating ECPay and PayPal for payment processing, transaction verification, and order synchronization. Deployed on VPS infrastructure with Cloudflare optimization for security, performance, and scalability."
+  },
+
+  "project2": {
+    "title": "A History of Taiwan Ceramic Patterns",
+    "description": "An interactive web experience that reinterprets Taiwan’s ceramic culture through the intersection of digital media and ceramic craftsmanship. The project explores historical development, symbolic ceramic patterns, and production techniques, allowing users to discover how Taiwanese ceramics evolved through cultural exchange and changing historical contexts.",
+    "InformationArchitecture": "To support progressive learning and exploration, the content is organized into three core sections: Historical Timeline, Symbolic Patterns, and Ceramic-Making Process. This structure enables users to navigate between cultural context, visual language, and material production with clarity.",
+    "VisualConcept": "To visualize the evolution of Taiwanese ceramic culture, I researched and curated twenty representative ceramic patterns from different historical and colonial periods. These patterns were distilled into a unified visual system that preserves their symbolic meanings while creating consistency across diverse historical references.",
+    "FormExploration": "Traditional ceramic motifs were simplified and reinterpreted to emphasize rhythm, movement, and visual flow. Variable stroke weights inspired by calligraphic brushwork introduce depth and expression, while a porcelain-inspired cobalt blue palette reinforces cultural authenticity through a contemporary design language.",
+    "InteractionDesign": "The installation bridges physical artifacts and digital interaction through Arduino and RFID technology. Each ceramic piece contains an RFID tag that triggers corresponding animations, visual effects, and contextual content within the website, creating a tactile and immersive learning experience that connects physical touch with digital storytelling."
+  },
+
+  "project3": {
+    "title": "Breath as Response",
+    "description": "A wearable interactive device that uses the wearer’s breathing patterns to control inflation and contraction, simulating the sensation of companionship. The project explores loneliness as the absence of response rather than the state of being alone, transforming breath into a form of self-generated comfort and connection.",
+    "con": "\"I hated loneliness, and I hated the version of myself that longed for companionship.\"",
+    "VisualConcept1": "This thought became the starting point of the project. For years, I associated loneliness with weakness and believed that emotional dependence reflected a lack of resilience. The tension between this belief and my lived experiences became the foundation for the work.",
+    "VisualConcept2": "Through reflecting on loneliness rather than avoiding it, I realized that loneliness is not the state of being one, but the absence of two. It is the echo left behind when connection is expected but never arrives. 'Breath as Response' emerged from this realization, using breathing as a continuous and instinctive signal that allows the body to become its own source of comfort and reassurance.",
+    "GraphicSystemDesign": "The project evolved into three wearable variations designed for the neck and wrist. One version references the visual language of medical bandages, symbolizing emotional first aid while blending naturally into everyday life as a subtle form of self-care.",
+    "TechnicalImplementation": "Built using Arduino Uno as the central controller, the system captures sound input through an audio sensor and drives pneumatic inflation using an L298N motor driver and solenoid valve. Detected signals activate inflation, while signal absence triggers deflation, creating a responsive cycle of expansion and contraction. The system integrates sensing, decision-making, pneumatic control, and mechanical output into a cohesive interactive experience."
+  },
+
+  "project4": {
+    "title": "Symbiosis",
+    "description": "An interactive sound installation consisting of six ceramic birds, each assigned a unique melody. Individual interactions trigger separate musical fragments, while collective participation combines all six melodies into a complete composition. The project explores coexistence, emphasizing how individual differences contribute to a balanced and interconnected whole.",
+    "VisualConcept": "The project originated from an earlier sound installation that used metal rings and fishing lines driven by slow-moving motors. The subtle collisions generated restrained, conversational sounds that suggested negotiation, coexistence, and mutual adjustment. This inspired a broader exploration of how people share space without overpowering one another.",
+    "InteractionDesign1": "Building on this concept, the installation translates mechanical interaction into human participation. Each ceramic bird features a conductive metal beak that functions as an interactive touchpoint. Touching a bird triggers a corresponding melodic fragment, while simultaneous interactions layer multiple melodies together.",
+    "InteractionDesign2": "The experience can only be fully realized through collaboration. Sound becomes a medium for social connection rather than passive listening, requiring multiple participants to contribute. Each melody functions as an indispensable part of the whole, reflecting a vision of coexistence built on difference, interdependence, and collective balance.",
+    "TechnicalImplementation1": "Six ceramic birds were handcrafted using low-fire clay, with conductive beaks constructed from wire and metal screws. When touched, the user completes an electrical circuit that sends a signal to a Makey Makey controller.",
+    "TechnicalImplementation2": "Makey Makey converts conductive inputs into keyboard signals, which are mapped to individual audio tracks and sound assets within Ableton Live.",
+    "TechnicalImplementation3": "The system contains six independent input channels, each linked to a dedicated sound source. Multiple simultaneous inputs trigger layered audio playback in real time, creating dynamic musical compositions through collective interaction. The technical ecosystem combines conductive interfaces, Makey Makey sensing, computer input systems, and Ableton Live audio processing."
+  },
+  "project5": {
+    "title": "Bubbles",
+    "description": "A material exploration using translucent organza to study accumulation, light, and spatial perception. Through layering and binding techniques, lightweight surfaces transform into bubble-like volumetric forms, creating shifting visual experiences between materiality and illusion."
+  },
+  "home": {
+    "title": " My work exists at the intersection of design, technology, and interaction. With a background in Creative Media Design and front-end development, I am interested in how digital experiences cancommunicate ideas, evoke emotions, and encourage participation.",
+    "title2": "This portfolio presents selected projects across UI/UX design, web development, and interactive media."
+  }
+}

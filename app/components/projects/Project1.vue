@@ -9,7 +9,7 @@
       <div class="grid-layout8 sm:!mb-0">
         <div
           ref="imgWrapRef"
-          class="sm:col-span-4 col-span-3 md:col-span-6 lg:col-span-5 bg-black w-full aspect-[16/9] overflow-hidden"
+          class="sm:col-span-4 col-span-3 md:col-span-6 lg:col-span-5 w-full aspect-[16/9] overflow-hidden"
         >
           <img
             ref="imgRef"
@@ -33,11 +33,10 @@
       </div>
       <div class="flex flex-col gap-3 sm:gap-4 justify-between">
         <h3 class="w-full">
-          La1ako
-          起源於手作樹脂創作，並逐漸發展為涵蓋飾品、服飾與生活物件的獨立品牌。作品以透明、輕盈且富有層次感的材質語言為特色，透過手工製作保留每件創作獨有的溫度與個性，將日常物件轉化為承載想像與情感的收藏品。
+          {{ t("project1.BrandStrategy1") }}
         </h3>
         <h3 class="w-full">
-          網站設計延續品牌夢幻且細膩的特質，透過柔和的視覺語言、互動體驗與內容敘事，打造兼具購物功能與情感連結的數位空間，讓使用者在探索商品的同時，也能感受創作背後的故事與溫度。
+          {{ t("project1.BrandStrategy2") }}
         </h3>
       </div>
     </div>
@@ -109,11 +108,11 @@
     class="grid-layout8 justify-end flex items-start sm:flex-row-reverse !my-[var(--margin)]"
   >
     <div
-      class="md:col-span-2 col-span-3 gap-3 sm:gap-4 flex flex-col lg:sticky lg:top-12"
+      class="md:col-span-2 col-span-3 gap-3 sm:gap-4 flex flex-col lg:sticky lg:top-14"
     >
       <div class="flex flex-col gap-3 sm:gap-4 justify-between">
         <h3 class="w-full">
-          介面設計延續品牌視覺識別，以溫暖柔和的色彩與插畫元素建立一致的品牌氛圍。<br />透過統一的元件規範、清晰的資訊層級與適當留白，引導使用者專注於商品內容與購買流程，同時兼顧視覺表現與操作效率。
+          {{ t("project1.InformationArchitecture") }}
         </h3>
       </div>
     </div>
@@ -137,9 +136,7 @@
       </div>
       <div class="flex flex-col gap-4 justify-between">
         <h3 class="w-full">
-          考量 La1ako
-          目前仍處於品牌發展初期，商品品項相對精簡，因此網站設計策略並非以大量商品瀏覽與導購為核心，而是著重於品牌氛圍的傳遞與使用者體驗的建立。透過互動設計、視覺敘事與內容編排，引導使用者在瀏覽過程中感受品牌特色，進一步提升停留時間與品牌記憶點。
-          在購買流程上，則以降低操作負擔為原則，精簡從商品瀏覽到完成結帳的步驟，減少不必要的決策與跳轉，使使用者能夠快速完成購買，同時保有探索品牌內容與互動體驗的空間。
+          {{ t("project1.StandardPurchaseFlow") }}
         </h3>
       </div>
     </div>
@@ -284,7 +281,7 @@
       class="lg:col-span-8 md:col-span-6 col-span-3 grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2"
     >
       <h3
-        class="col-span-3 md:col-span-1 md:self-start md:sticky md:top-12 relative"
+        class="col-span-3 md:col-span-1 md:self-start md:sticky md:top-14 relative"
       >
         Get Receipt!
       </h3>
@@ -301,7 +298,7 @@
       class="lg:col-span-8 md:col-span-6 col-span-3 grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2"
     >
       <h3
-        class="col-span-3 md:col-span-1 md:self-start md:sticky md:top-12 relative"
+        class="col-span-3 md:col-span-1 md:self-start md:sticky md:top-14 relative"
       >
         svg Animation
       </h3>
@@ -330,10 +327,7 @@
       </div>
       <div class="flex flex-col gap-3 sm:gap-4 justify-between">
         <h3 class="w-full">
-          獨立完成電商平台全端開發，採用 Vue、Nuxt、Node.js 與 MySQL
-          建立商品管理、購物車、訂單與結帳系統。<br />整合綠界 ECPay 與 PayPal
-          金流，實作付款驗證、訂單狀態同步及交易流程管理。系統部署於 VPS，並透過
-          Cloudflare 進行網路與效能優化，完成可實際營運的線上商店。
+          {{ t("project1.FullStackDevelopment") }}
         </h3>
       </div>
     </div>
@@ -347,6 +341,7 @@ import ColorCard from "~/components/ColorCard.vue";
 import { colors } from "~/composables/colors";
 import ProjectLayout from "~/components/ProjectLayout.vue";
 import { ref, onMounted, onBeforeUnmount } from "vue";
+const { t } = useI18n();
 
 useSeoMeta({
   title: "PiPiChouPortfolio",
@@ -354,14 +349,12 @@ useSeoMeta({
   ogImage: "/project1/cover.webp",
 });
 
-const project = {
-  title: "La1ako",
-  description:
-    "以 La1ako 品牌為核心，打造一個兼具購物功能與情感體驗的線上空間。網站不僅提供商品展示與購買流程，更透過互動設計、動態效果與細膩的視覺語言，讓使用者在瀏覽過程中感受到品牌所營造的氛圍。藉由層層堆疊的視覺細節與互動回饋，讓網站成為品牌理念的延伸，而不只是商品交易的平台。",
-
+const project = computed(() => ({
+  title: t("project1.title"),
+  description: t("project1.description"),
   roles: ["Product Designer", "UI/UX Designer", "Full-Stack Developer"],
 
-  link: "Website Link",
+  link: "",
 
   sections: [
     {
@@ -384,7 +377,7 @@ const project = {
       items: ["Full-Stack Developer"],
     },
   ],
-};
+}));
 
 async function preloadResources() {
   const videos = [

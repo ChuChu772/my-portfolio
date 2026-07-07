@@ -34,7 +34,7 @@
       </div>
       <div class="flex flex-col gap-4 justify-between">
         <h3 class="w-full">
-          為了讓使用者能循序漸進地認識台灣陶瓷文化，網站內容被規劃為「歷史脈絡」、「紋樣寓意」與「製作流程」三個主要單元。
+          {{ t("project2.InformationArchitecture") }}
         </h3>
       </div>
     </div>
@@ -80,7 +80,7 @@
       </div>
       <div class="flex gap-4 justify-between md:pb-8">
         <h3 class="w-full">
-          為呈現臺灣陶瓷文化在不同時代的演變，我蒐集並研究了二十種來自不同殖民時期與歷史階段的代表性陶瓷花紋。這些紋樣反映了各時期的工藝技術、美學偏好與文化交流痕跡。我將其重新整理與簡化，保留原有特徵與象徵意涵，並透過統一的線條語言重新詮釋，使不同時代的視覺記憶得以在同一套設計系統中共存。
+          {{ t("project2.VisualConcept") }}
         </h3>
       </div>
     </div>
@@ -163,9 +163,7 @@
       </div>
       <div class="flex flex-col gap-4 justify-between pb-8">
         <h3 class="w-full">
-          將傳統陶瓷花紋重新簡化與轉譯，保留植物紋樣的流動性與節奏感。
-          透過前細後粗的筆觸描繪，呼應毛筆運筆的力道變化，建立更具層次的線條表現。<br />
-          色彩選用青花瓷藍作為主要視覺語彙，在傳承文化意象的同時，形塑當代且一致的視覺風格。
+          {{ t("project2.FormExploration") }}
         </h3>
       </div>
     </div>
@@ -198,16 +196,14 @@
     class="grid-layout8 justify-end items-start flex sm:flex-row-reverse my-[var(--margin)]"
     id="Visual Concept Development"
   >
-    <div class="col-span-3 md:col-span-2 gap-4 flex flex-col md:sticky top-12">
+    <div class="col-span-3 md:col-span-2 gap-4 flex flex-col md:sticky top-14">
       <div class="gap-2 flex">
         <h5 class="tracking-[0.95px]">02 . 04</h5>
         <h4 class="">Interaction Design</h4>
       </div>
       <div class="flex flex-col gap-4 justify-between">
         <h3 class="w-full">
-          互動效果使用 Arduino 與 RFID 技術建立實體與數位之間的互動橋樑。<br />
-          每塊陶瓷作品皆配置獨立 RFID
-          標籤，系統讀取後將識別碼傳送至網頁端，觸發對應的動畫、視覺效果與內容展示，使觀者能透過觸碰與移動實體物件來建立觸覺與數位體驗之間的連結。
+          {{ t("project2.InteractionDesign") }}
         </h3>
       </div>
     </div>
@@ -225,7 +221,7 @@
     id="Visual Concept Development"
   >
     <div
-      class="md:col-span-3 col-span-3 md:col-start-1 gap-4 flex flex-col md:sticky top-12"
+      class="md:col-span-3 col-span-3 md:col-start-1 gap-4 flex flex-col md:sticky top-14"
     >
       <div class="gap-2 flex">
         <h5 class="tracking-[0.95px]">03 . 01</h5>
@@ -233,7 +229,7 @@
       </div>
     </div>
     <div
-      class="lg:col-span-5 md:col-span-3 col-span-3 grid md:grid-cols-[repeat(4,1fr)] grid-cols-[repeat(4,1fr)] gap-4 items-center"
+      class="lg:col-span-5 md:col-span-3 col-span-3 grid md:grid-cols-[repeat(4,1fr)] grid-cols-[repeat(4,1fr)] gap-3 sm:gap-4 items-center"
     >
       <img
         v-for="(img, index) in images"
@@ -255,7 +251,7 @@
       </div>
     </div>
     <div
-      class="lg:col-span-6 lg:col-start-2 col-span-6 gap-4 flex flex-col items-center"
+      class="lg:col-span-6 lg:col-start-2 col-span-6 gap-3 sm:gap-4 flex flex-col items-center"
     >
       <img
         src="/project2/ceremic-01.webp"
@@ -308,6 +304,7 @@
 
 <script setup>
 import ProjectLayout from "~/components/ProjectLayout.vue";
+const { t } = useI18n();
 
 useSeoMeta({
   title: "PiPiChouPortfolio",
@@ -375,14 +372,13 @@ async function preloadResources() {
 const images = Array.from({ length: 12 }, (_, i) => {
   return `/project2/record/record${i + 1}.webp`;
 });
-const project = {
-  title: "拾遺",
-  description:
-    "本作品結合陶瓷創作與網頁互動設計，透過數位介面重新詮釋台灣陶瓷的文化脈絡。整體網站分為三大單元：台灣陶瓷的歷史發展、以互動方式呈現的二十款紋樣文化寓意，以及陶瓷製作流程的介紹。使用者可透過點選不同時期或紋樣類別進行互動探索，理解台灣陶瓷如何在時間推移中逐步融合與演變，從泥土的原始狀態走向精緻的器物形式。",
-
+const project = computed(() => ({
+  title: t("project2.title"),
+  description: t("project2.description"),
   roles: ["Product Designer", "UI/UX Designer", "Full-Stack Developer"],
 
   link: "2026 Website Link",
+  links: "https://chuchu772.github.io/chuchu/k2/tty",
 
   sections: [
     {
@@ -410,7 +406,7 @@ const project = {
       items: ["Final Outcome"],
     },
   ],
-};
+}));
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

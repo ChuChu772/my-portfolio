@@ -6,28 +6,33 @@
 
     <div class="grid-layout8 z-20 relative">
       <div class="md:col-span-2 col-span-1 z-20">
-        <p ref="introTextRef" class="leading-none opacity-0">
-          My work exists at the intersection of design, technology, and
-          interaction. With a background in Creative Media Design and front-end
-          development, I am interested in how digital experiences can
-          communicate ideas, evoke emotions, and encourage participation.
+        <p ref="introTextRef" class="leading-[8px] md:leading-[12px] opacity-0">
+          {{ t("home.title") }}
         </p>
       </div>
       <div
         class="md:col-span-1 md:col-start-4 col-start-3 col-span-1 lg:col-start-6"
       >
-        <p ref="portfolioTextRef" class="leading-none opacity-0">
-          This portfolio presents selected projects across UI/UX design, web
-          development, and interactive media.
+        <p
+          ref="portfolioTextRef"
+          class="leading-[8px] md:leading-[12px] opacity-0"
+        >
+          {{ t("home.title2") }}
         </p>
       </div>
       <div
         class="col-span-1 md:col-span-2 lg:col-start-8 md:text-right text-left"
       >
-        <p ref="contactTextRef" class="leading-none opacity-0">
+        <p
+          ref="contactTextRef"
+          class="leading-[8px] md:leading-[12px] opacity-0"
+        >
           PiPiChou based in Taiwan
         </p>
-        <p ref="contactTextRef2" class="leading-none opacity-0">
+        <p
+          ref="contactTextRef2"
+          class="leading-[8px] md:leading-[12px] opacity-0"
+        >
           Email : matsu310720@gmail.com
         </p>
       </div>
@@ -59,6 +64,12 @@
         </div>
       </a>
 
+      <div
+        ref="language"
+        class="flex flex-col items-start pointer-events-auto pt-4"
+      >
+        <LanguageSwitch />
+      </div>
       <div class="absolute bottom-0 w-screen px-4">
         <img ref="pipiRef" src="/pipi.png" alt="" class="opacity-0" />
       </div>
@@ -73,10 +84,8 @@ import { useEntranceController } from "@/composables/Useentrancecontroller";
 import { useTextLineAnimation } from "@/composables/useTextLineAnimation";
 import gsap from "gsap";
 import { useRouter } from "vue-router";
+const { t } = useI18n();
 
-/* ============================================================
-   Preload：儲存 Promise，讓 navigateTo 可以在換頁前 await 它
-   ============================================================ */
 function preloadImage(src: string): Promise<void> {
   return new Promise((resolve) => {
     const img = new Image();
@@ -140,6 +149,39 @@ const contactTextAnim = useTextLineAnimation(contactTextRef, {
   delay: 0.3,
   y: 14,
 });
+
+// ── language 的 opacity 入場離場 ───────────────────────
+const language = ref<HTMLElement | null>(null);
+
+function setLanguageInitial() {
+  if (!language.value) return;
+  gsap.set(language.value, { opacity: 0 });
+}
+
+function playLanguageIn(): void {
+  if (!language.value) return;
+  gsap.to(language.value, {
+    opacity: 1,
+    duration: 1,
+    ease: "power3.out",
+    delay: 1,
+  });
+}
+
+function playLanguageOut(): Promise<void> {
+  return new Promise((resolve) => {
+    if (!language.value) {
+      resolve();
+      return;
+    }
+    gsap.to(language.value, {
+      opacity: 0,
+      duration: 0.4,
+      ease: "power3.in",
+      onComplete: () => resolve(),
+    });
+  });
+}
 
 const pipiRef = ref<HTMLElement | null>(null);
 
@@ -226,6 +268,7 @@ onMounted(async () => {
   });
 
   setPipiInitial();
+  setLanguageInitial();
 
   registerContentEntrance(() => {
     masterTl.play();
@@ -234,6 +277,7 @@ onMounted(async () => {
     contactTextAnim.run();
     contactTextAnim2.run();
     playPipiIn();
+    playLanguageIn();
   });
 });
 
@@ -261,6 +305,7 @@ async function navigateTo(to: string): Promise<void> {
     trail?.fadeOutAll() ?? Promise.resolve(),
     reverseItems(),
     playPipiOut(),
+    playLanguageOut(),
     opaout(),
     introTextAnim.playOut({ duration: 0.4, y: -14 }),
     portfolioTextAnim.playOut({ duration: 0.4, y: -14 }),

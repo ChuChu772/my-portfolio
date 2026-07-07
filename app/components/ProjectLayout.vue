@@ -22,7 +22,14 @@
 
       <!-- Link -->
       <div class="col-span-1 flex flex-col gap-2 md:items-end items-start">
-        <h5 class="w-fit border-b">{{ project.link }}</h5>
+        <a
+          :href="project.links"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-fit border-b"
+        >
+          <h5>{{ project.link }}</h5>
+        </a>
       </div>
 
       <!-- Sections -->

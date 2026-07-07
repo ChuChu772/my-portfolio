@@ -67,7 +67,7 @@
       class="col-span-3 text-end md:hidden mb-10 opacity-0"
       @click="goProject(projects[activeIndex].id)"
     >
-      <h5>GO TO PROJECT</h5>
+      <h4>GO TO PROJECT</h4>
     </div>
 
     <div
@@ -76,7 +76,9 @@
     >
       <Transition name="fade-up" mode="out-in">
         <div :key="activeIndex" class="gap-2 flex flex-col">
-          <h5 class="leading-normal">{{ projects[activeIndex].content }}</h5>
+          <h5 class="leading-normal">
+            {{ projects[activeIndex].content }}
+          </h5>
         </div>
       </Transition>
     </div>
@@ -86,6 +88,7 @@
 <script setup>
 import { ref, inject, onMounted, onUnmounted, nextTick } from "vue";
 import gsap from "gsap";
+const { t } = useI18n();
 
 const activeIndex = ref(0);
 const itemRefs = [];
@@ -96,53 +99,45 @@ const imgRefs = [];
 const rightPanelRef = ref(null);
 const goButtonRef = ref(null); // 「GO TO PROJECT」手機版按鈕
 
-const projects = [
+const projects = computed(() => [
   {
-    title: "La1ako",
+    title: t("project1.title"),
     image: "/project1/cover.webp",
-    desc: "樹脂飾品品牌網站",
     date: "2026",
     id: 1,
-    content:
-      "以 La1ako品牌為核心，打造一個兼具購物功能與情感體驗的線上空間。網站不僅提供商品展示與購買流程，更透過互動設計、動態效果與細膩的視覺語言，讓使用者在瀏覽過程中感受到品牌所營造的氛圍。藉由層層堆疊的視覺細節與互動回饋，讓網站成為品牌理念的延伸，而不只是商品交易的平台。",
+    content: t("project1.description"),
   },
   {
-    title: "拾遺",
+    title: t("project2.title"),
     image: "/project2/cover.webp",
-    desc: "互動植物網站",
     date: "2025",
     id: 2,
-    content:
-      "本作品結合陶瓷創作與網頁互動設計，透過數位介面重新詮釋台灣陶瓷的文化脈絡。整體網站分為三大單元：台灣陶瓷的歷史發展、以互動方式呈現的二十款紋樣文化寓意，以及陶瓷製作流程的介紹。使用者可透過點選不同時期或紋樣類別進行互動探索，理解台灣陶瓷如何在時間推移中逐步融合與演變，從泥土的原始狀態走向精緻的器物形式。",
+    content: t("project2.description"),
   },
   {
-    title: "氣息的反饋",
+    title: t("project3.title"),
     image: "/project3/b1.webp",
-    desc: "未來信件網站",
     date: "2024",
     id: 3,
-    content:
-      "這是一個穿戴式裝置，透過使用者的呼吸控制裝置收縮，模擬陪伴的感覺。作品源於對孤獨情緒的探索：孤獨不是單一的存在，而是缺席的感受與未被回應的渴望。裝置設計穿戴於頸部與手腕，並融入生活化的元素，如膠布式樣，讓陪伴在日常中自然發生。",
+    content: t("project3.description"),
   },
   {
-    title: "共生",
+    title: t("project4.title"),
     image: "/project4/cover.webp",
-    desc: "動畫網站",
+
     date: "2024",
     id: 4,
-    content:
-      "每隻鳥配有一段旋律，觀者觸碰鳥喙即可觸發音樂。當六隻鳥同時被觸發，六段旋律會組合成完整小樂曲。裝置需要六人協作，概念來自我對於人與人相處的理想狀態：每個人各自不同，卻在同一空間中互相影響、達成平衡。每段旋律，如同每個人的存在，都是不可或缺的。",
+    content: t("project4.description"),
   },
   {
-    title: "浮泡",
+    title: t("project5.title"),
     image: "/project5/cover.webp",
-    desc: "品牌形象網站",
+
     date: "2023",
     id: 5,
-    content:
-      "本作品以歐根紗作為主要材質，運用其半透明與光線折射所產生的色彩變化特性，發展出由少成多的視覺概念。透過重複堆疊、包覆與綁結的手法，將原本輕薄單一的纖維層層累積，使其逐漸轉化為具有體積感的結構，形成如泡泡般聚集的有機形態。利用光線穿透與流動所產生的視覺變化，使作品在不同觀看角度與光源條件下呈現多層次效果。整體試圖營造介於實體與幻象之間的視覺體驗，使材質本身成為介質，連結空間、光與感知的流動關係。",
+    content: t("project5.description"),
   },
-];
+]);
 
 const goProject = async (id) => {
   const tl = gsap.timeline();
@@ -236,14 +231,12 @@ async function playIntro() {
   const vh = window.innerHeight;
   const vw = window.innerWidth;
 
-  // 圖片總高度空間
   const totalHeight = vh * 0.8;
-  const cardHeight = totalHeight / projects.length;
+  const cardHeight = totalHeight / projects.value.length;
   const cardWidth = vw * 0.4;
   const startY = vh * 0.1;
   const centerX = vw / 2 - cardWidth / 2;
 
-  // 初始化 card 位置（直排置中）
   cardRefs.forEach((card, i) => {
     gsap.set(card, {
       x: centerX,
@@ -252,7 +245,7 @@ async function playIntro() {
       height: cardHeight - 8,
       scale: 0,
       opacity: 1,
-      backgroundImage: `url(${projects[i].image})`,
+      backgroundImage: `url(${projects.value[i].image})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     });
