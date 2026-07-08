@@ -64,6 +64,13 @@ export default defineNuxtConfig({
           href: "/fav.png",
         },
       ],
+      script: [
+        {
+          defer: true,
+          src: "https://cloud.umami.is/script.js",
+          "data-website-id": "4339d604-ac52-4dc3-a4a7-8e51f8dc1c36",
+        },
+      ],
     },
   },
 });
