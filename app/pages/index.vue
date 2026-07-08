@@ -109,6 +109,7 @@ function preloadResources(): Promise<void> {
     "/book/road2.png",
     "/book/road3.png",
     "/book/illu.png",
+    "/book/book1.webp",
   ];
 
   return Promise.all(images.map(preloadImage)).then(() => undefined);
