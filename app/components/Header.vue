@@ -30,7 +30,7 @@
       </a>
 
       <button @click="goTo('/project')">
-        <h3 class="leading-none !m-0">MY WORKS</h3>
+        <h3 class="leading-none !m-0">DESIGN PROJECTS</h3>
       </button>
 
       <button @click="goTo('/illustration')">

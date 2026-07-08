@@ -59,7 +59,7 @@
       >
         <div class="flow-item flex items-center justify-center gap-2">
           <span class="side-symbol left">[</span>
-          <h3 class="item-text opacity-0">MY WORKS</h3>
+          <h3 class="item-text opacity-0">DESIGN PROJECTS</h3>
           <span class="side-symbol right">]</span>
         </div>
       </a>
