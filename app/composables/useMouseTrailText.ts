@@ -7,6 +7,7 @@ interface UseMouseTrailTextOptions {
   triggerDistance?: number;
   maxWords?: number;
   zIndex?: number;
+  excludeSelector?: string; // 新增：排除偵測的區塊選擇器
 }
 
 interface BindResult {
@@ -23,6 +24,7 @@ export function useMouseTrailText(options: UseMouseTrailTextOptions): {
     fontFamily = "monospace",
     maxWords = 20,
     zIndex = 9999,
+    excludeSelector = "",
   } = options;
 
   const words = text.split(" ").filter(Boolean);
@@ -36,7 +38,7 @@ export function useMouseTrailText(options: UseMouseTrailTextOptions): {
       width: "0",
       height: "0",
       pointerEvents: "none",
-      color: "black",
+      color: "#757373",
       // mixBlendMode: "difference",
       zIndex: String(zIndex),
     });
@@ -151,6 +153,18 @@ export function useMouseTrailText(options: UseMouseTrailTextOptions): {
     }
     function onMouseMove(e: MouseEvent): void {
       if (!isActive) return;
+
+      // 排除區域：更新座標避免離開時位移暴衝，但不顯示文字
+      if (
+        excludeSelector &&
+        (e.target as HTMLElement)?.closest(excludeSelector)
+      ) {
+        lastX = e.clientX;
+        lastY = e.clientY;
+        accumulated = 0;
+        return;
+      }
+
       const dx = e.clientX - lastX;
       const dy = e.clientY - lastY;
       accumulated += Math.sqrt(dx * dx + dy * dy);

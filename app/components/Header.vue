@@ -39,7 +39,7 @@
     </div>
 
     <button
-      class="mobile-menu-btn h-3 w-6 hidden flex-col justify-between z-50 col-span-1 sm:hidden md:hidden lg:hidden"
+      class="mobile-menu-btn h-3 w-6 hidden flex-col justify-between z-[52] col-span-1 sm:hidden md:hidden lg:hidden"
       @click="menuOpen = !menuOpen"
     >
       <span
@@ -53,7 +53,7 @@
     </button>
 
     <div
-      class="mobile-menu grid-layout8 !mb-0 !p-3 !flex-col flex"
+      class="mobile-menu grid-layout8 !mb-0 !p-3 !flex-col flex z-[99]"
       :class="{ open: menuOpen }"
     >
       <div class="col-span-2 pt-12">
@@ -75,18 +75,26 @@
       </div>
 
       <div class="col-span-3 flex flex-col justify-start items-start gap-4">
-        <button @click="goTo('/illustration')">
-          <h3 class="leading-none !m-0 border-b border-[var(--Aprimary)]">
-            ILLUSTRATION
-          </h3>
+        <button
+          @click="goTo('/illustration')"
+          class="flow-item flex items-center justify-center gap-2"
+        >
+          <span class="flow-dot-outer">
+            <span class="flow-dot-inner h-2 w-2 bg-black"></span>
+          </span>
+          <h3 class="item-text opacity-1">ILLUSTRATIONS</h3>
         </button>
 
         <div class="flex justify-start items-start gap-2 w-full">
           <div class="w-1/3 leading-none">
-            <button @click="goTo('/project')">
-              <h3 class="leading-none !m-0 border-b border-[var(--Aprimary)]">
-                MY WORKS
-              </h3>
+            <button
+              @click="goTo('/project')"
+              class="flow-item flex items-center justify-center gap-2"
+            >
+              <span class="flow-dot-outer">
+                <span class="flow-dot-inner h-2 w-2 bg-black"></span>
+              </span>
+              <h3 class="item-text opacity-1">DESIGN PROJECTS</h3>
             </button>
           </div>
 
@@ -177,7 +185,7 @@ button {
   background: white;
   height: 100svh;
   width: 100vw;
-  z-index: 45;
+  z-index: 51;
 
   transform: scale(1.2);
   opacity: 0;
@@ -207,5 +215,23 @@ button {
     justify-self: end; /* 靠右對齊 */
     align-self: center; /* 垂直置中 */
   }
+}
+
+.item-text {
+  text-align: center;
+  padding-top: 6px;
+}
+
+.flow-dot-outer {
+  display: inline-block;
+}
+
+.flow-dot-inner {
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.flow-item:hover .flow-dot-inner {
+  transform: rotate(90deg) scale(1.2);
 }
 </style>

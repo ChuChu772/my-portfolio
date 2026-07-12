@@ -47,9 +47,10 @@
         class="pointer-events-auto cursor-pointer"
       >
         <div class="flow-item flex items-center justify-center gap-2">
-          <span class="side-symbol left">[</span>
-          <h3 class="item-text opacity-0">ILLUSTRATION</h3>
-          <span class="side-symbol right">]</span>
+          <span class="flow-dot-outer">
+            <span class="flow-dot-inner h-2 w-2 bg-black"></span>
+          </span>
+          <h3 class="item-text opacity-0">ILLUSTRATIONS</h3>
         </div>
       </a>
 
@@ -58,9 +59,10 @@
         class="pointer-events-auto cursor-pointer"
       >
         <div class="flow-item flex items-center justify-center gap-2">
-          <span class="side-symbol left">[</span>
+          <span class="flow-dot-outer">
+            <span class="flow-dot-inner h-2 w-2 bg-black"></span>
+          </span>
           <h3 class="item-text opacity-0">DESIGN PROJECTS</h3>
-          <span class="side-symbol right">]</span>
         </div>
       </a>
 
@@ -127,6 +129,7 @@ const { bind } = useMouseTrailText({
   fontFamily: "monospace",
   maxWords: 80,
   zIndex: 9999,
+  excludeSelector: ".flow-item",
 });
 
 let trail: ReturnType<typeof bind> | null = null;
@@ -237,24 +240,22 @@ onMounted(async () => {
   if (!items) return;
 
   items.forEach((item, i) => {
-    const left = item.querySelector(".left");
-    const right = item.querySelector(".right");
     const text = item.querySelector(".item-text");
+    const dot = item.querySelector(".flow-dot-outer");
 
-    gsap.set(left, { x: 20, opacity: 0 });
-    gsap.set(right, { x: -20, opacity: 0 });
     gsap.set(text, { opacity: 0 });
+    gsap.set(dot, { opacity: 0, scale: 0 });
 
     const t = i * 0.2;
 
     masterTl
       .to(
-        [left, right],
+        dot,
         {
-          x: (idx) => (idx === 0 ? -4 : 4),
-          duration: 0.8,
           opacity: 1,
-          ease: "power3.out",
+          scale: 1,
+          duration: 0.4,
+          ease: "back.out(2)",
         },
         t,
       )
@@ -264,10 +265,9 @@ onMounted(async () => {
           opacity: 1,
           duration: 0.3,
         },
-        t + 0.4,
+        t + 0.15,
       );
   });
-
   setPipiInitial();
   setLanguageInitial();
 
@@ -324,11 +324,21 @@ async function navigateTo(to: string): Promise<void> {
 </script>
 
 <style scoped>
-.side-symbol {
-  opacity: 0;
-}
 .item-text {
   text-align: center;
   padding-top: 6px;
+}
+
+.flow-dot-outer {
+  display: inline-block;
+}
+
+.flow-dot-inner {
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.flow-item:hover .flow-dot-inner {
+  transform: rotate(90deg) scale(1.2);
 }
 </style>
